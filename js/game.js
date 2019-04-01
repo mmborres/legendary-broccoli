@@ -85,10 +85,18 @@ const getHighestScore = function(pArray) {
 };
 
 const checkWinner = function() {
+  let win = false;
   if (isWinningLine("X") || isWinningLine("O")) {
-    return true;
+    win = true;
   }
-  return false;
+  
+  if ( win===true ) {
+    // handle winner
+	alert("winner");
+	//reset
+	resetGameArray();
+  }
+  return win;
 };
 
 const canPlay = function() {
@@ -166,6 +174,11 @@ const gamePlay = function(index) {
   // setup array
   gameArray[index] = "X";
   showBoard(index);
+  
+  // check if there's a winner
+  if ( checkWinner() ) {
+    return true;
+  }
 
   // given an index, get possible placements
   const arrPossiblePlacements = getPossiblePlacements(index);
@@ -178,10 +191,6 @@ const gamePlay = function(index) {
 
   // check if there's a winner
   if ( checkWinner() ) {
-    // handle winner
-	alert("winner");
-	//reset
-	resetGameArray();
     return true;
   }
 
