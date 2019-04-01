@@ -3,9 +3,10 @@ const clickBox = function () {
   const name = this.getAttribute('name');//this.attr('name');
   const idx = name.split('_')[1];
   
-  const playAgain = gamePlay(parseInt(idx));
-  if (playAgain===true) {
+  const gameover = gamePlay(parseInt(idx));
+  if (gameover===true) {
 	  addShuffle();
+	  removeHandler();
   }
   
 };
@@ -34,6 +35,14 @@ const addShuffle = function() {
 		//parent.appendChild(hbt);
 		parent.appendChild(bt);
 	}
+};
+
+const removeHandler = function () {
+	for (let i = 0; i < 9; i++) {
+      const idBox = "#idBox_" + i;
+      const $boxElement = $(idBox);
+      $boxElement.off('click', clickBox );
+    }
 };
 
 const setupBoard = function() {
