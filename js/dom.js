@@ -1,7 +1,40 @@
 const clickBox = function () {
   console.log("");
+  const name = this.getAttribute('name');//this.attr('name');
+  const idx = name.split('_')[1];
+  
+  const playAgain = gamePlay(parseInt(idx));
+  if (playAgain===true) {
+	  addShuffle();
+  }
+  
 };
 
+const playAgain = function () {
+	document.getElementById("gameboard").innerHTML = "";
+	document.getElementById("playagain").innerHTML = "";
+	setupBoard();
+};
+
+const addShuffle = function() {
+	
+	let parent = document.getElementById("playagain"); //parent
+	
+	let bt = document.createElement('button');
+		bt.setAttribute('id', "shufflebutton");
+		bt.addEventListener('click', playAgain);
+		bt.innerHTML = "Play Again?";
+
+	/*let hbt = document.createElement('button');
+			hbt.setAttribute('class', "hidden");
+			hbt.setAttribute('id', "buttonextra");
+			hbt.innerHTML = "HIDDENHIDDENHIIDDDDEENNN";*/
+			
+	if (parent!==null) {
+		//parent.appendChild(hbt);
+		parent.appendChild(bt);
+	}
+};
 
 const setupBoard = function() {
   let idb = 0;
@@ -15,16 +48,11 @@ const setupBoard = function() {
       $boxElement.attr('class', "guessword");
       const idBox = "idBox_" + idb;
       $boxElement.attr('id', idBox);
-      $boxElement.html("W");
+	  $boxElement.attr('name', idBox);
+      $boxElement.html("O");
       $boxElement.on('click', clickBox );
 
-      //const bElement = $boxElement;
-      //bElement.addEventListener('click', clickBox (idb));
-
       $divRow.append($boxElement);
-      //const idQuery = "'#" + idBox + "'";
-      //$(idQuery).on('click', clickBox(idb) );
-
 
       idb += 1;
     }
@@ -35,10 +63,7 @@ const setupBoard = function() {
 
 const startGame = function() {
   // initial display of the game
-
   setupBoard();
-
-  //gamePlay(7);
 
 };
 

@@ -1,11 +1,8 @@
 //array to store the moves
-/*const gameArray = [ "", "", "",
-                    "", "", "",
-                    "", "", "" ];*/
 
 const gameArray = [ "", "", "",
                     "", "", "",
-                    "", "X", "" ];
+                    "", "", "" ];
 
 
 //check for winning
@@ -30,8 +27,6 @@ const isWinningLine = function (player) {
 };
 
 //available moves
-const validDiagonal = [0, 2, 4, 6, 8];
-
 const validPairs = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8],
   [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -43,7 +38,14 @@ const getPossiblePlacements = function (index) {
   // given index return all possible valid pairings
   for (let y=0; y< validPairs.length; y++) {
     if ( validPairs[y].includes(index) ) {
-      pArray.push(validPairs[y]);
+	  //check if valid
+	  const g0 = validPairs[y][0];
+	  const g1 = validPairs[y][1];
+	  const g2 = validPairs[y][2];
+	  
+	  if ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" ) {
+		pArray.push(validPairs[y]); //only if available
+	  }
     }
   }
   return pArray;
@@ -52,7 +54,7 @@ const getPossiblePlacements = function (index) {
 const points =  function(str) {
   if (str==="") return 1;
   if (str==="O") return 2;
-  if (str==="X") return 3; //human
+  if (str==="X") return 3; //human, high score so it will be chosen
 };
 
 const getHighestScore = function(pArray) {
@@ -64,13 +66,12 @@ const getHighestScore = function(pArray) {
     for (let x=0; x<3; x++) { //inner is 3
       const gIdx = pArray[y][x];
       total += points( gameArray[gIdx] );
-      //if (gIdx!=0 && gIdx!=3 && gIdx!=6) {
       const gIdxMin1 = pArray[y][x-1];
 
         if ( gameArray[gIdx]!=="" && gameArray[gIdx]===gameArray[gIdxMin1] ) {
           total = total * 2;
         }
-      //}
+
     }
     if (total>hightotal) {
       hightotal = total;
@@ -85,8 +86,6 @@ const getHighestScore = function(pArray) {
 
 const checkWinner = function() {
   if (isWinningLine("X") || isWinningLine("O")) {
-    //handle winning or endgame
-
     return true;
   }
   return false;
@@ -100,17 +99,73 @@ const canPlay = function() {
 };
 
 const playAI = function(array, index) {
-  for (let x=0; x<3; x++) { //inner is 3
-    const gIdx = array[x];
-    if (gIdx!==index && gameArray[gIdx]==="") {
-      // mark the spot
-      gameArray[gIdx] = "O";
-      break;
-    }
+try {  
+  const gIdx = array.indexOf(index);
+  
+  if ( gIdx-1 >=0 ) {
+	  //left exists
+	  let aIdx = array[gIdx-1]; 
+	  if ( gameArray[aIdx] === "" ) {
+		  gameArray[aIdx] = "O";
+		  showBoard(aIdx);
+		  return;
+	  }  
+	  aIdx = array[gIdx-2]; 
+	  if ( gameArray[aIdx] === "" ) {
+		  gameArray[aIdx] = "O";
+		  showBoard(aIdx);
+		  return;
+	  }  
   }
+  if ( gIdx+1 <3 ) {
+	  //right exists
+	  let aIdx = array[gIdx+1]; 
+	  if ( gameArray[aIdx] === "" ) {
+		  gameArray[aIdx] = "O";
+		  showBoard(aIdx);
+		  return;
+	  }  
+	  //if leftmost
+	  aIdx = array[gIdx+2];
+	  if ( gameArray[aIdx] === "" ) {
+		  gameArray[aIdx] = "O";
+		  showBoard(aIdx);
+		  return;
+	  } 
+  }
+} catch (e) {
+	//TODO
+}
+  
+};
+
+const showBoard = function(index) {
+  const idBox = "idBox_" + index;
+
+  const boxElement = document.createElement('span');
+  boxElement.setAttribute('class', "answeredword");
+  boxElement.setAttribute('id', idBox);
+  
+
+  const elemOld = document.getElementById(idBox);
+  const pNode = elemOld.parentNode;
+  
+  pNode.replaceChild(boxElement, elemOld);
+
+  document.getElementById(idBox).innerHTML = gameArray[index];
+  $(idBox).off('click', clickBox);
+};
+
+const resetGameArray = function() {
+	for (let y=0; y<gameArray.length; y++) {
+		gameArray[y] = "";
+	}
 };
 
 const gamePlay = function(index) {
+  // setup array
+  gameArray[index] = "X";
+  showBoard(index);
 
   // given an index, get possible placements
   const arrPossiblePlacements = getPossiblePlacements(index);
@@ -123,12 +178,22 @@ const gamePlay = function(index) {
 
   // check if there's a winner
   if ( checkWinner() ) {
-    console.log("Winner found");
-  };
+    // handle winner
+	alert("winner");
+	//reset
+	resetGameArray();
+    return true;
+  }
 
   // check canPlay for next move
-  if ( canPlay() ) {
-    console.log("Can still play");
-  };
+  if ( !canPlay() ) {
+	//reset
+	resetGameArray();
+    return true;
+  }
+  return false; //continue playing
 
 };
+
+
+
