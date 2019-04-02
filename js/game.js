@@ -142,16 +142,18 @@ const getHighestScore = function(pArray) {
     const g0 = pArray[y][0]; const g1 = pArray[y][1]; const g2 = pArray[y][2];
 
     //AI winning, highest scoe
-    if ( (gameArray[g0]===aiPlayer && gameArray[g0]===gameArray[g1]) ||
+    if ( ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" )
+        && ( (gameArray[g0]===aiPlayer && gameArray[g0]===gameArray[g1]) ||
           (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g1]) ||
-          (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g0]) ) {
+          (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g0]) ) ) {
             total += 100;
     }
 
     //human winning, AI trying to block it, scores higher too
-    if ( (gameArray[g0]===humanPlayer && gameArray[g0]===gameArray[g1]) ||
+    if ( ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" )
+        && ( (gameArray[g0]===humanPlayer && gameArray[g0]===gameArray[g1]) ||
           (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g1]) ||
-          (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g0]) ) {
+          (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g0]) ) ) {
             total += 50;
     }
 
