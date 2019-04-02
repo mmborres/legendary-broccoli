@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookie Monster Tic Tac Toe</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/game.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/dom.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <nav>
+        <a href="instructions.html">Instructions</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="index.html">Game</a>
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="custom.html">Custom</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Cookie OR Ice Cream?</h2>
+      <p class="pClass">
+        <form id="formcustom" action="index.html" method="get" class="pClass">
+          Choose Player => <br>
+          <img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerHuman()">
+          <img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerAI()">
+          <input type="hidden" id="player" name="player" value="icHuman">
+          <br>
+          Play first?
+          <input type="radio" name="alert" id="alertYes" onclick="playFirst()" checked="checked">Yes
+  		    <input type="radio" name="alert" id="alertNo" onclick="playFirst()">No
+          <input type="hidden" id="playFirstAI" name="playFirstAI" value="false">
+        <input type="submit" value="Ready? Game On!" class="pClass">
+        </form>
+
+
+
+
+      </p>
+    </main>
+
+  </div>
+
+</body>
+</html>

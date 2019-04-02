@@ -1,7 +1,9 @@
 //array to store the moves
-const humanPlayer = "X";
-const aiPlayer = "O";
+let humanPlayer = "X";
+let aiPlayer = "O";
 let winnerPlayer = "";
+let playFirstAI = false;
+
 
 const gameArray = [ "", "", "",
                     "", "", "",
