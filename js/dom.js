@@ -2,13 +2,35 @@ const clickBox = function () {
   console.log("");
   const name = this.getAttribute('name');//this.attr('name');
   const idx = name.split('_')[1];
-  
+
   const gameover = gamePlay(parseInt(idx));
   if (gameover===true) {
 	  addShuffle();
 	  removeHandler();
   }
-  
+
+};
+
+const showBoard = function(index) {
+  const idBox = "idBox_" + index;
+
+  const boxElement = document.createElement('span');
+  boxElement.setAttribute('class', "answeredword");
+  boxElement.setAttribute('id', idBox);
+
+  //const $boxElement = $('<span>');
+  //$boxElement.attr('class', "answeredword");
+  //$boxElement.attr('id', idBox);
+
+  const jId = "#" + idBox;
+  const elemOld = document.getElementById(idBox);
+  const pNode = elemOld.parentNode;
+
+  pNode.replaceChild(boxElement, elemOld);
+
+  //document.getElementById(idBox).innerHTML = gameArray[index];
+  $(jId).html(gameArray[index]);
+  $(jId).off('click', clickBox);
 };
 
 const playAgain = function () {
@@ -18,9 +40,9 @@ const playAgain = function () {
 };
 
 const addShuffle = function() {
-	
+
 	let parent = document.getElementById("playagain"); //parent
-	
+
 	let bt = document.createElement('button');
 		bt.setAttribute('id', "shufflebutton");
 		bt.addEventListener('click', playAgain);
@@ -30,7 +52,7 @@ const addShuffle = function() {
 			hbt.setAttribute('class', "hidden");
 			hbt.setAttribute('id', "buttonextra");
 			hbt.innerHTML = "HIDDENHIDDENHIIDDDDEENNN";*/
-			
+
 	if (parent!==null) {
 		//parent.appendChild(hbt);
 		parent.appendChild(bt);
@@ -40,8 +62,8 @@ const addShuffle = function() {
 const removeHandler = function () {
 	for (let i = 0; i < 9; i++) {
       const idBox = "#idBox_" + i;
-      const $boxElement = $(idBox);
-      $boxElement.off('click', clickBox );
+      //const $boxElement = $(idBox);
+      $(idBox).off('click', clickBox );
     }
 };
 

@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("../img/cookie.jpg");
+  background-size: cover;
+}
+
+.container {
+  max-width: 960px; /* common value, responsive design */
+  margin: 0 auto;
+
+  padding: 1em; /*space inside the box*/
+   /*space outside the box*/
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+
+main {
+  display: inline-block;
+  width: 100%;
+}
