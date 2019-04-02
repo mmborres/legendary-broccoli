@@ -229,7 +229,7 @@ try {
 
   //check itself
   if (placed === false) {
-    placed = occupy(gIdx);
+    placed = occupy(array[gIdx]);
   }
 
   return placed;

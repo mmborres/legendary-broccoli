@@ -1,8 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Caveat+Brush');
+/*@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');*/
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
+/*@import url('https://fonts.googleapis.com/css?family=Russo+One');*/
+/*@import url('https://fonts.googleapis.com/css?family=Roboto');*/
+
+/*
+//background
+https://media.giphy.com/media/l0K4hBbFA3XBcD1V6/giphy.gif
+
+//winner gameover
+https://media.giphy.com/media/d2W6OUVGqrhyAbG8/giphy.gif
+
+//no winner
+https://media.giphy.com/media/3osxYh5db5WFXxe9i0/giphy.gif
+*/
+
 body {
-  margin: 0;
-  padding: 0;
-  background-image: url("../img/cookie.jpg");
+  /*margin: 0;
+  padding: 0;*/
+  background-image: url("https://media.giphy.com/media/d3MKb2hCZaNH63zq/giphy.gif");
   background-size: cover;
+  /*font-family: 'Caveat Brush', cursive;*/
+  /*font-family: 'Gloria Hallelujah', cursive;*/
+  /*font-family: 'Luckiest Guy', cursive;*/
+  /*font-family: 'Russo One', sans-serif;*/
+  /*font-family: 'Roboto', sans-serif;*/
 }
 
 .container {
@@ -15,7 +37,128 @@ body {
   border-bottom-right-radius: 1em;
 }
 
+/*body {
+  background-color: #222;
+  margin: 0;
+  padding: 0;
+}*/
+
+/*.container {
+  max-width: 960px;
+  margin: 0 auto;
+  background-color: #ccc;
+  padding: 1em;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}*/
+
+p {
+  text-align:justify; 
+  font-size: 16px;
+}
+
+nav {
+  text-align: center;
+  font-weight: bold;
+  vertical-align: text-bottom;
+  font-size: 50px;
+  font-family: 'Luckiest Guy', cursive;
+  padding: 5px;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+  vertical-align: text-bottom;
+}
+
+h1 {
+  text-align: center;
+  background-color: #222;
+  color: #ccc;
+  padding: 1em;
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+	color: black;
+	text-align: center;
+	/*padding: 1em;*/
+	font-size: 50px;
+	font-family: 'Caveat Brush', cursive;
+	letter-spacing: 1px;
+}
+
+div {
+	text-align: center;
+	/*padding: 1em;*/
+}
+
+.imgrow {
+	display: flex;
+	padding: 0;
+	margin: 0;
+}
+
 main {
   display: inline-block;
-  width: 100%;
+  /*width: 75%;*/
 }
+
+main img {
+  display: inline block;
+  margin: auto;
+}
+
+img {
+  border: 5px solid green;
+  border-radius: 4px;
+  /*padding: 5px;*/
+  /*width: 150px;
+  height: 150px;*/
+}
+
+.imgbutton {
+	border: 0;
+}
+
+aside {
+  display: inline-block;
+  width: 21%;
+  vertical-align: top;
+  background-color: #cfc;
+  padding: 1em;
+  border-radius: 0.5em;
+  box-shadow: 0 0 15px #222;
+}
+
+aside ul {
+  padding-left: 17px;
+}
+
+span.guessword {
+  display: inline; /* the default for span */
+  width: 200px;
+  height: 200px;
+  /*padding: 10px;*/
+  border: 2px solid green;
+  /*background-color: lightblue;*/
+  /*line-height: 50px;*/
+  font-size: 100px;
+  /*color: lightblue;*/
+  border-radius: 0.2em;
+}
+
+span.answeredword {
+  display: inline; /* the default for span */
+  width: 200px;
+  height: 200px;
+  /*padding: 10px;*/
+  border: 2px solid green;
+  /*background-color: lightblue;*/
+  /*line-height: 50px;*/
+  font-size: 100px;
+  color: black;
+  border-radius: 0.2em;
+}
+
