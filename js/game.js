@@ -179,15 +179,23 @@ const checkWinner = function() {
   if ( win===true ) {
       // handle winner
       let name = "";
-      if (winnerPlayer===playerHumanObj.player) {
+      if (winnerPlayer===playerHumanObj.player) { //base on marker
         name = playerHumanObj.name;
+		playerHumanObj.roundswon += 1;
+		winnerImg = playerHumanObj.winimg;
       } else {
         name = playerAIObj.name;
+		playerAIObj.roundswon += 1;
+		winnerImg = playerAIObj.winimg;
       }
 
-	    alert(name + " is the winner!");
+	    //alert(name + " is the winner!");
+		winnerMsg = name + " is the winner!";
 	    //reset
 	    resetGameArray();
+  } else {
+	  winnerImg = "img/draw.png";
+	  winnerMsg = "It's a draw!"
   }
   return win;
 };
@@ -243,7 +251,7 @@ try {
 
   return placed;
 } catch (e) {
-	//TODO
+	//
 }
 
 };
