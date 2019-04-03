@@ -31,11 +31,13 @@ const playFirst = function() {
 
 /// Game Page
 const playerHumanObj = {
+  name: "Human",
   player: "X",
   img: "img/icHuman.jpg"
 };
 
 const playerAIObj = {
+  name: "Computer",
   player: "O",
   img: "img/cookieAI.jpg"
 };
@@ -128,9 +130,19 @@ const getCustom = function(){
   if (x.includes("index.html?")) {
   		const customvals = x.split("?")[1]; //holder of values
 
+      // handle NAME of human player
+      //playerName of Human
+      let playerName = "";
+  		if (customvals.includes("playerName=")) {
+  			playerName = customvals.split("playerName=")[1];
+        playerName = playerName.substring(0, playerName.indexOf('&'));
+
+        playerHumanObj.name = playerName;
+      }
+
       let player = "";
-  		if (customvals.includes("player")) {
-  			player = customvals.split("=")[1];
+  		if (customvals.includes("player=")) {
+  			player = customvals.split("player=")[1];
         player = player.substring(0, player.indexOf('&'));
 
         if (player==="icHuman") { //default
@@ -160,6 +172,8 @@ const getCustom = function(){
             playFirstAI = true;
         }
       }
+
+
     }
 };
 

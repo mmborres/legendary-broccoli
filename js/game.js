@@ -178,7 +178,14 @@ const checkWinner = function() {
   }
   if ( win===true ) {
       // handle winner
-	    alert(winnerPlayer + " winner!");
+      let name = "";
+      if (winnerPlayer===playerHumanObj.player) {
+        name = playerHumanObj.name;
+      } else {
+        name = playerAIObj.name;
+      }
+
+	    alert(name + " is the winner!");
 	    //reset
 	    resetGameArray();
   }
