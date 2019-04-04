@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookie Monster Tic Tac Toe</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/game.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/dom.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <nav>
+        <a href="instructions.html">Instructions</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="index.html">Game</a>
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="custom.html">Custom</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Cookie OR Ice Cream?</h2>
+      <p class="pClass">
+
+        <form id="formcustom" action="index.html" method="get" class="pClass">
+      Enter Player A's name: <input type="text" id"playerNameA" name="playerNameA"><br>
+      Enter Player B's name: <input type="text" id"playerNameB" name="playerNameB"><br>
+      Player A gets to choose an icon first => <br>
+      <img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerIceCream()">
+      <img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerCookie()">
+      <input type="hidden" id="player" name="player" value="icecream">
+      <input type="hidden" id="playAgainst" name="playAgainst" value="peer">
+      <br>
+      Play first?
+      <input type="radio" name="alert" id="playFirstA" onclick="playFirstPeerCall()" checked="checked">Player A
+      <input type="radio" name="alert" id="playFirstB" onclick="playFirstPeerCall()">Player B
+      <input type="hidden" id="playFirstPeer" name="playFirstPeer" value="playerA">
+      <br>
+      <input type="image" id="imagePlayButton" alt="Ready? Game On!" src="img/play.png">
+        </form>
+
+
+      </p>
+    </main>
+
+  </div>
+
+</body>
+</html>

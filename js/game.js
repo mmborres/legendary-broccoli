@@ -4,6 +4,8 @@ let aiPlayer = "O";
 let winnerPlayer = "";
 let playFirstAI = false;
 let winnerArray;
+let peerPlayFirst = ""; // if human players this will have a value
+let currentTurn = "";
 
 const gameArray = [ "", "", "",
                     "", "", "",
@@ -48,27 +50,29 @@ const getPossiblePlacements = function (index) {
   let pArray = [];
 
   //strategy: handle corner, should choose center = 4
-  if (index===0 || index===2 || index===6 || index===8) {
-    for (let y=0; y< validPairs.length; y++) {
-      if ( validPairs[y].includes(4) && validPairs[y].includes(index) ) { //center, choose a corner
-        if ( gameArray[4]==="" ) {
-            pArray.push(validPairs[y]); //only if available
+  if (smartAI) {
+    if (index===0 || index===2 || index===6 || index===8) {
+      for (let y=0; y< validPairs.length; y++) {
+        if ( validPairs[y].includes(4) && validPairs[y].includes(index) ) { //center, choose a corner
+          if ( gameArray[4]==="" ) {
+              pArray.push(validPairs[y]); //only if available
+          }
         }
       }
     }
-  }
 
-  //strategy: handle center, when chosen by player early in the game
-  if (index===4 && countEmpty()>7) {
-    for (let y=0; y< validPairs.length; y++) {
-      if ( validPairs[y].includes(4) && (validPairs[y].includes(6) || validPairs[y].includes(8)) ) { //center, choose a corner
-        const g0 = validPairs[y][0]; const g1 = validPairs[y][1]; const g2 = validPairs[y][2];
-        if ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" ) {
-            pArray.push(validPairs[y]); //only if available
+    //strategy: handle center, when chosen by player early in the game
+    if (index===4 && countEmpty()>7) {
+      for (let y=0; y< validPairs.length; y++) {
+        if ( validPairs[y].includes(4) && (validPairs[y].includes(6) || validPairs[y].includes(8)) ) { //center, choose a corner
+          const g0 = validPairs[y][0]; const g1 = validPairs[y][1]; const g2 = validPairs[y][2];
+          if ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" ) {
+              pArray.push(validPairs[y]); //only if available
+          }
         }
       }
     }
-  }
+  } //smartAI
 
   //usual strategy
   if (pArray.length===0) {
@@ -98,19 +102,21 @@ const getPossiblePlacements = function (index) {
 
   //check other possible arrPossiblePlacements that makes AI win
   //added feature instead of just chasing off the human player
-  if (pArray.length>0) {
-    for (let y=0; y< validPairs.length; y++) {
-  	      if (!pArray.includes(validPairs[y])) {
-    	      const g0 = validPairs[y][0]; const g1 = validPairs[y][1]; const g2 = validPairs[y][2];
-            if ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" ) {
-              if ( (gameArray[g0]===aiPlayer && gameArray[g0]===gameArray[g1]) ||
-                    (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g1]) ||
-                    (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g0])
-                  ) {
-                pArray.push(validPairs[y]); //stretegy to win
-              }
-    	      }
-        }
+  if (smartAI) {
+    if (pArray.length>0) {
+      for (let y=0; y< validPairs.length; y++) {
+    	      if (!pArray.includes(validPairs[y])) {
+      	      const g0 = validPairs[y][0]; const g1 = validPairs[y][1]; const g2 = validPairs[y][2];
+              if ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" ) {
+                if ( (gameArray[g0]===aiPlayer && gameArray[g0]===gameArray[g1]) ||
+                      (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g1]) ||
+                      (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g0])
+                    ) {
+                  pArray.push(validPairs[y]); //stretegy to win
+                }
+      	      }
+          }
+      }
     }
   }
 
@@ -135,25 +141,26 @@ const getHighestScore = function(pArray) {
       total += points( gameArray[gIdx] );
     }
 
-    //additional points for candidate wins
-    const g0 = pArray[y][0]; const g1 = pArray[y][1]; const g2 = pArray[y][2];
+    if (smartAI) {
+      //additional points for candidate wins
+      const g0 = pArray[y][0]; const g1 = pArray[y][1]; const g2 = pArray[y][2];
 
-    //AI winning, highest scoe
-    if ( ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" )
-        && ( (gameArray[g0]===aiPlayer && gameArray[g0]===gameArray[g1]) ||
-          (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g1]) ||
-          (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g0]) ) ) {
-            total += 100;
+      //AI winning, highest scoe
+      if ( ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" )
+          && ( (gameArray[g0]===aiPlayer && gameArray[g0]===gameArray[g1]) ||
+            (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g1]) ||
+            (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g0]) ) ) {
+              total += 100;
+      }
+
+      //human winning, AI trying to block it, scores higher too
+      if ( ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" )
+          && ( (gameArray[g0]===humanPlayer && gameArray[g0]===gameArray[g1]) ||
+            (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g1]) ||
+            (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g0]) ) ) {
+              total += 50;
+      }
     }
-
-    //human winning, AI trying to block it, scores higher too
-    if ( ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" )
-        && ( (gameArray[g0]===humanPlayer && gameArray[g0]===gameArray[g1]) ||
-          (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g1]) ||
-          (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g0]) ) ) {
-            total += 50;
-    }
-
     //check points
     if (total>hightotal) {
       hightotal = total;
@@ -174,18 +181,31 @@ const checkWinner = function() {
   if ( win===true ) {
       // handle winner
       let name = "";
-      if (winnerPlayer===playerHumanObj.player) { //base on marker
-        name = playerHumanObj.name;
-		playerHumanObj.roundswon += 1;
-		winnerImg = playerHumanObj.winimg;
+      if (playAgainst==="AI") {
+        if (winnerPlayer===playerHumanObj.player) { //base on marker
+          name = playerHumanObj.name;
+  		    playerHumanObj.roundswon += 1;
+  		    winnerImg = playerHumanObj.winimg;
+        } else {
+          name = playerAIObj.name;
+  		    playerAIObj.roundswon += 1;
+  		    winnerImg = playerAIObj.winimg;
+        }
       } else {
-        name = playerAIObj.name;
-		playerAIObj.roundswon += 1;
-		winnerImg = playerAIObj.winimg;
+        //peer
+        if (winnerPlayer===playerHumanObj.player) { //base on marker
+          name = playerHumanObj.name;
+  		    playerHumanObj.roundswon += 1;
+  		    winnerImg = playerHumanObj.winimg;
+        } else {
+          name = playerHumanObjB.name;
+  		    playerHumanObjB.roundswon += 1;
+  		    winnerImg = playerHumanObjB.winimg;
+        }
       }
 
 	    //alert(name + " is the winner!");
-		winnerMsg = name + " is the winner!";
+		  winnerMsg = name + " is the winner!";
 	    //reset
 	    resetGameArray();
   } else {
@@ -259,7 +279,14 @@ const resetGameArray = function() {
 
 const gamePlay = function(index) {
   // setup array
-  gameArray[index] = humanPlayer;
+  if (currentTurn==="playerA") {
+    gameArray[index] = playerHumanObj.player;//humanPlayer;
+  } else if (currentTurn==="playerB"){
+    gameArray[index] = playerHumanObjB.player;
+  } else {
+    gameArray[index] = humanPlayer;
+  }
+
   showBoard(index);
 
   // check if there's a winner
@@ -268,25 +295,27 @@ const gamePlay = function(index) {
     return true;
   }
 
-  // given an index, get possible placements
-  const arrPossiblePlacements = getPossiblePlacements(index);
+  if (playAgainst==="AI") {
+    // given an index, get possible placements
+    const arrPossiblePlacements = getPossiblePlacements(index);
 
-  // get highest score row
-  const highScoreRow = getHighestScore(arrPossiblePlacements);
+    // get highest score row
+    const highScoreRow = getHighestScore(arrPossiblePlacements);
 
-  // place O in the nearby empty spot
-  playAI(highScoreRow, index);
+    // place O in the nearby empty spot
+    playAI(highScoreRow, index);
 
-  // check if there's a winner
-  if ( checkWinner() ) {
-    blinkWinnerRow();
-    return true;
-  }
+    // check if there's a winner
+    if ( checkWinner() ) {
+      blinkWinnerRow();
+      return true;
+    }
+ }
 
   // check canPlay for next move
   if ( !canPlay() ) {
-	//reset
-	resetGameArray();
+	  //reset
+	  resetGameArray();
     return true;
   }
   return false; //continue playing

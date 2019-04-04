@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookie Monster Tic Tac Toe</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/game.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/dom.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <nav>
+        <a href="instructions.html">Instructions</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="index.html">Game</a>
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="custom.html">Custom</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Cookie OR Ice Cream?</h2>
+      <p class="pClass">
+      Play against the computer. <br>
+        <form id="formcustom" action="index.html" method="get" class="pClass">
+			Enter your name: <input type="text" id"playerName" name="playerName"><br>
+			Choose Player => <br>
+			<img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerHuman()">
+			<img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerAI()">
+			<input type="hidden" id="player" name="player" value="icHuman">
+      <input type="hidden" id="playAgainst" name="playAgainst" value="AI">
+			<br>
+			Play first?
+			<input type="radio" name="alert" id="alertYes" onclick="playFirst()" checked="checked">Yes
+  		<input type="radio" name="alert" id="alertNo" onclick="playFirst()">No
+			<input type="hidden" id="playFirstAI" name="playFirstAI" value="false">
+			<!--input type="submit" value="Ready? Game On!" class="pClass"-->
+      <br>Bonus:<br>
+      How do you like your opponent? <br>
+      <input type="radio" name="computer" id="computerDumb" onclick="compAI()">Kind of smart
+  		<input type="radio" name="computer" id="computerSmart" onclick="compAI()" checked="checked">Smart
+			<input type="hidden" id="computerdumb" name="computerdumb" value="false">
+			<br>
+			<input type="image" id="imagePlayButton" alt="Ready? Game On!" src="img/play.png">
+        </form>
+
+
+
+
+      </p>
+    </main>
+
+  </div>
+
+</body>
+</html>

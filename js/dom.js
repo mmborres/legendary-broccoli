@@ -30,13 +30,62 @@ const playFirst = function() {
 	alert("Game on, you play " + ( playFirstAI===true ? "second." : "first.") );
 };
 
+const playFirstPeerCall = function() {
+	if ( document.getElementById("playFirstA").checked === true) {
+		$('#playFirstPeer').val("playerA");
+	}
+	if (document.getElementById("playFirstB").checked === true) {
+		$('#playFirstPeer').val("playerB");
+	}
+	//alert("Game on, you play " + ( playFirstAI===true ? "second." : "first.") );
+};
+
+const compAI = function() {
+	if ( document.getElementById("computerDumb").checked === true) {
+		$('#computerdumb').val("true");
+	}
+	if (document.getElementById("computerSmart").checked === true) {
+		$('#computerdumb').val("false");
+	}
+
+};
+
+const playerIceCream = function() {
+  //player A chose Ice Cream
+  $('#icHuman').off('click', playerIceCream);
+  $('#cookieAI').on('click', playerCookie);
+
+  $('#player').val("icecream");
+  alert("Ice Cream for Player A! Cookie for Player B.");
+};
+
+const playerCookie = function() {
+  //player A chose Cookie
+  $('#icHuman').on('click', playerIceCream);
+  $('#cookieAI').off('click', playerCookie);
+
+  $('#player').val("cookie");
+  alert("Cookie for Player A! Ice Cream for Player B.")
+};
+
 /////////////////////////// Game Page
+let playAgainst = "";
+let smartAI = true;
+let firstPeerPlayer = "";
 
 let playerHumanObj = { //default values
   name: "Human",
   player: "X",
   img: "img/icHuman.jpg",
   winimg: "img/icwins.png",
+  roundswon: 0
+};
+
+let playerHumanObjB = { //default values
+  name: "Human B",
+  player: "O",
+  img: "img/cookieAI.jpg",
+  winimg: "img/cookiewins.png",
   roundswon: 0
 };
 
@@ -57,12 +106,22 @@ const clickBox = function () {
   const idx = name.split('_')[1];
 
   const gameover = gamePlay(parseInt(idx));
+
   if (gameover===true) {
 	  gameOver();
 	  addShuffle();
 	  displayRounds();
 	  removeHandler();
 	  localStore();
+  } else {
+    if (playAgainst==="peer") {
+      //setup next player
+      if (currentTurn==="playerA") {
+        currentTurn = "playerB";
+      } else {
+        currentTurn = "playerA";
+      }
+    }
   }
 
 };
@@ -102,11 +161,18 @@ const playAgain = function () {
 	$('#gameboard').html("");
 	$('#playagain').html("");
 	$('#playagain').attr('visibility', "hidden");
+
+  getCustom();
 	setupBoard();
 
 	if (playFirstAI===true) {
 		startAI();
 	}
+
+  if (playAgainst==="peer" && peerPlayFirst!=="") {
+    //two players
+    currentTurn = peerPlayFirst;
+  }
 };
 
 const addShuffle = function() {
@@ -152,9 +218,16 @@ const setupBoard = function() {
 };
 
 const displayRounds = function() {
-	const winH = "win" + (playerHumanObj.roundswon===1 ? "" : "s" );
-	const winA = "win" + (playerAIObj.roundswon===1 ? "" : "s") ;
-	const rounds = `${playerHumanObj.name}: ${playerHumanObj.roundswon} ${winH}  |  ${playerAIObj.name}: ${playerAIObj.roundswon} ${winA}`;
+  let rounds;
+  if (playAgainst==="AI") {
+  	const winH = "win" + (playerHumanObj.roundswon===1 ? "" : "s" );
+  	const winA = "win" + (playerAIObj.roundswon===1 ? "" : "s") ;
+    rounds = `${playerHumanObj.name}: ${playerHumanObj.roundswon} ${winH}  |  ${playerAIObj.name}: ${playerAIObj.roundswon} ${winA}`;
+  } else {
+    const winH = "win" + (playerHumanObj.roundswon===1 ? "" : "s" );
+  	const winA = "win" + (playerHumanObjB.roundswon===1 ? "" : "s") ;
+  	rounds = `${playerHumanObj.name}: ${playerHumanObj.roundswon} ${winH}  |  ${playerHumanObjB.name}: ${playerHumanObjB.roundswon} ${winA}`;
+  }
 	$('#roundswon').html(rounds);
 };
 
@@ -163,6 +236,63 @@ const getCustom = function(){
 	if (x.includes("index.html?")) {
 		const customvals = x.split("?")[1]; //holder of values
 
+    if (customvals.includes("playAgainst=peer")) {
+      playAgainst = "peer";
+
+      //Names
+      let playerName = "";
+    		if (customvals.includes("playerNameA=")) {
+    			playerName = customvals.split("playerNameA=")[1];
+  			playerName = playerName.substring(0, playerName.indexOf('&'));
+  			if (playerName!=="") {
+          playerHumanObj.name = playerName;
+        }
+  		}
+
+      //player B
+    		if (customvals.includes("playerNameB=")) {
+    			playerName = customvals.split("playerNameB=")[1];
+  			playerName = playerName.substring(0, playerName.indexOf('&'));
+  			if (playerName!=="") {
+          playerHumanObjB.name = playerName;
+        }
+  		}
+
+      //player icecream
+      let player = ""; //marker
+    		if (customvals.includes("player=")) {
+    			player = customvals.split("player=")[1];
+  			player = player.substring(0, player.indexOf('&'));
+
+  			if (player==="icecream") { //default
+  				humanPlayer = "X";
+  				aiPlayer = "O";
+  			} else {
+  				humanPlayer = "O";
+  				aiPlayer = "X";
+
+  				playerHumanObj.player = "O";
+  				playerHumanObjB.player = "X";
+
+  				let tempImg = playerHumanObj.img; //hold
+  				playerHumanObj.img = playerHumanObjB.img;
+  				playerHumanObjB.img = tempImg;
+
+  				tempImg = playerHumanObj.winimg; //hold
+  				playerHumanObj.winimg = playerHumanObjB.winimg;
+  				playerHumanObjB.winimg = tempImg;
+        }
+      }
+
+      //playfirst A or B
+      //peerPlayFirst
+    		if (customvals.includes("playFirstPeer=")) {
+    			peerPlayFirst = customvals.split("playFirstPeer=")[1];
+  			  peerPlayFirst = peerPlayFirst.substring(0, peerPlayFirst.indexOf('&'));
+        }
+
+    } else {
+      playAgainst = "AI";
 		//handle NAME of human player
 		//playerName of Human
 		let playerName = "";
@@ -170,7 +300,7 @@ const getCustom = function(){
   			playerName = customvals.split("playerName=")[1];
 			playerName = playerName.substring(0, playerName.indexOf('&'));
 			if (playerName!=="") { playerHumanObj.name = playerName; }
-		}
+		  }
 
 		let player = ""; //marker
   		if (customvals.includes("player=")) {
@@ -201,14 +331,37 @@ const getCustom = function(){
 		let pFirstAI = ""; //who plays first
 		if (customvals.includes("playFirstAI")) {
   			pFirstAI = customvals.split("playFirstAI=")[1];
+        pFirstAI = pFirstAI.substring(0, pFirstAI.indexOf('&'));
 
-			if (pFirstAI.includes("false")) {
+			if (pFirstAI==="false") {
 				playFirstAI = false;
 			} else {
 				playFirstAI = true;
 			}
 		}
+
+    let compdumb = ""; //smart or dumb AI
+    //computerdumb
+    //smartAI
+    if (customvals.includes("computerdumb")) {
+  			compdumb = customvals.split("computerdumb=")[1];
+        compdumb = compdumb.substring(0, compdumb.indexOf('&'));
+
+			if (compdumb==="false") {
+				smartAI = true;
+			} else {
+				smartAI = false;
+			}
+		}
+
+
     }
+  } else {
+    //defaults
+    smartAI = true;
+    playFirstAI = false;
+    playAgainst = "AI";
+  }
 };
 
 const gameOver = function() {
@@ -238,6 +391,10 @@ const localStore = function() {
 		// store
 		localStorage.setItem('playerHumanObj', JSON.stringify(playerHumanObj));
 		localStorage.setItem('playerAIObj', JSON.stringify(playerAIObj));
+		localStorage.setItem('playerHumanObjB', JSON.stringify(playerHumanObjB));
+
+    localStorage.setItem('peerPlayFirst', peerPlayFirst);
+    localStorage.setItem('playFirstAI', playFirstAI);
 	}
 };
 
@@ -246,11 +403,16 @@ const retrieveLocalStore = function() {
 		//Then to retrieve it from the store and convert to an object again:
 		playerHumanObj = JSON.parse(localStorage.getItem('playerHumanObj'));
 		playerAIObj = JSON.parse(localStorage.getItem('playerAIObj'));
+		playerHumanObjB = JSON.parse(localStorage.getItem('playerHumanObjB'));
+
+    peerPlayFirst = localStorage.getItem('peerPlayFirst');
+    playFirstAI = localStorage.getItem('playFirstAI');
 	}
 };
 
 const startGame = function() {
   localStorage.clear(); //start fresh
+  peerPlayFirst = "";
 
   getCustom(); //in case there are custom settings
 
@@ -259,6 +421,13 @@ const startGame = function() {
 
   if (playFirstAI===true) {
     startAI();
+  }
+
+  if (peerPlayFirst!=="") {
+    //two players
+    currentTurn = peerPlayFirst;
+  } else {
+    currentTurn = "";
   }
 };
 
