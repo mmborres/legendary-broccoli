@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="js/game.js"></script>
   <script src="js/jquery.js"></script>
-  <script src="js/dom.js"></script>
+  <script src="js/custom.js"></script>
 
 </head>
 <body>
@@ -31,19 +31,22 @@
         <form id="formcustom" action="index.html" method="get" class="pClass">
 			Enter your name: <input type="text" id"playerName" name="playerName"><br>
 			Choose Player => <br>
-			<img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerHuman()">
-			<img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerAI()">
+			<div class="divflex">
+        <div class="divimg"><img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerHuman()">
+          <div class="centered" id="chooseicecream">Human Player</div></div>
+			  <div class="divimg"><img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerAI()">
+          <div class="centered" id="choosecookie">Computer</div></div>
+      </div>
 			<input type="hidden" id="player" name="player" value="icHuman">
       <input type="hidden" id="playAgainst" name="playAgainst" value="AI">
-			<br>
+
 			Play first?
 			<input type="radio" name="alert" id="alertYes" onclick="playFirst()" checked="checked">Yes
   		<input type="radio" name="alert" id="alertNo" onclick="playFirst()">No
 			<input type="hidden" id="playFirstAI" name="playFirstAI" value="false">
-			<!--input type="submit" value="Ready? Game On!" class="pClass"-->
-      <br>Bonus:<br>
+			<br>
       How do you like your opponent? <br>
-      <input type="radio" name="computer" id="computerDumb" onclick="compAI()">Kind of smart
+      <input type="radio" name="computer" id="computerDumb" onclick="compAI()">Semi-smart
   		<input type="radio" name="computer" id="computerSmart" onclick="compAI()" checked="checked">Smart
 			<input type="hidden" id="computerdumb" name="computerdumb" value="false">
 			<br>

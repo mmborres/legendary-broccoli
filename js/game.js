@@ -21,8 +21,7 @@ const validPairs = [
 //check for winning
 const isWinningLine = function (player) {
   const g = gameArray; //for neatness
-  const p = player;
-  const v = validPairs;
+  const p = player; const v = validPairs;
   let win = false;
 
   for (let y=0; y<v.length; y++) {
@@ -118,7 +117,7 @@ const getPossiblePlacements = function (index) {
           }
       }
     }
-  }
+  } //smartAI
 
   return pArray;
 };
@@ -160,7 +159,8 @@ const getHighestScore = function(pArray) {
             (gameArray[g2]===humanPlayer && gameArray[g2]===gameArray[g0]) ) ) {
               total += 50;
       }
-    }
+    }//smartAI
+
     //check points
     if (total>hightotal) {
       hightotal = total;
@@ -283,7 +283,7 @@ const gamePlay = function(index) {
     gameArray[index] = playerHumanObj.player;//humanPlayer;
   } else if (currentTurn==="playerB"){
     gameArray[index] = playerHumanObjB.player;
-  } else {
+  } else { //AI
     gameArray[index] = humanPlayer;
   }
 
@@ -310,7 +310,7 @@ const gamePlay = function(index) {
       blinkWinnerRow();
       return true;
     }
- }
+ } //AI
 
   // check canPlay for next move
   if ( !canPlay() ) {
@@ -319,7 +319,6 @@ const gamePlay = function(index) {
     return true;
   }
   return false; //continue playing
-
 };
 
 const startAI = function() {

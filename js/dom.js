@@ -1,72 +1,3 @@
-//////////////////////////// Custom Page
-
-const playerHuman = function() {
-  //if human is chosen, remove listener
-  //make sure other listener is ON
-  $('#icHuman').off('click', playerHuman);
-  $('#cookieAI').on('click', playerAI);
-
-  $('#player').val("icHuman");
-  alert("Game on, Ice Cream Addict!")
-};
-
-const playerAI = function() {
-  $('#icHuman').on('click', playerHuman);
-  $('#cookieAI').off('click', playerAI);
-
-  $('#player').val("playerAI");
-  alert("Game on, Cookie Monster!")
-};
-
-const playFirst = function() {
-	if ( document.getElementById("alertYes").checked === true) {
-  		playFirstAI = false;
-		$('#playFirstAI').val("false");
-	}
-	if (document.getElementById("alertNo").checked === true) {
-		playFirstAI = true;
-		$('#playFirstAI').val("true");
-	}
-	alert("Game on, you play " + ( playFirstAI===true ? "second." : "first.") );
-};
-
-const playFirstPeerCall = function() {
-	if ( document.getElementById("playFirstA").checked === true) {
-		$('#playFirstPeer').val("playerA");
-	}
-	if (document.getElementById("playFirstB").checked === true) {
-		$('#playFirstPeer').val("playerB");
-	}
-	//alert("Game on, you play " + ( playFirstAI===true ? "second." : "first.") );
-};
-
-const compAI = function() {
-	if ( document.getElementById("computerDumb").checked === true) {
-		$('#computerdumb').val("true");
-	}
-	if (document.getElementById("computerSmart").checked === true) {
-		$('#computerdumb').val("false");
-	}
-
-};
-
-const playerIceCream = function() {
-  //player A chose Ice Cream
-  $('#icHuman').off('click', playerIceCream);
-  $('#cookieAI').on('click', playerCookie);
-
-  $('#player').val("icecream");
-  alert("Ice Cream for Player A! Cookie for Player B.");
-};
-
-const playerCookie = function() {
-  //player A chose Cookie
-  $('#icHuman').on('click', playerIceCream);
-  $('#cookieAI').off('click', playerCookie);
-
-  $('#player').val("cookie");
-  alert("Cookie for Player A! Ice Cream for Player B.")
-};
 
 /////////////////////////// Game Page
 let playAgainst = "";
@@ -121,9 +52,22 @@ const clickBox = function () {
       } else {
         currentTurn = "playerA";
       }
+      displayGameStatus();
     }
   }
 
+};
+
+const displayGameStatus = function() {
+  let name = "";
+  if (currentTurn==="playerA") {
+    name = playerHumanObj.name;
+  } else {
+    name = playerHumanObjB.name;
+  }
+
+  $('#gamestatus').html(name + "'s turn now...");
+  $('#gamestatus').addClass("imgblue tab blink");
 };
 
 const blinkWinnerRow = function() {
@@ -145,10 +89,18 @@ const showBoard = function(index) {
   boxElement.setAttribute('id', idBox);
   boxElement.setAttribute('name', idBox);
 
-  if (gameArray[index]===playerHumanObj.player) {
-	   boxElement.setAttribute('src', playerHumanObj.img);
+  if (playAgainst==="AI") {
+    if (gameArray[index]===playerHumanObj.player) {
+  	   boxElement.setAttribute('src', playerHumanObj.img);
+    } else {
+  	   boxElement.setAttribute('src', playerAIObj.img);
+    }
   } else {
-	   boxElement.setAttribute('src', playerAIObj.img);
+    if (gameArray[index]===playerHumanObj.player) {
+  	   boxElement.setAttribute('src', playerHumanObj.img);
+    } else {
+  	   boxElement.setAttribute('src', playerHumanObjB.img);
+    }
   }
 
   pNode.replaceChild(boxElement, elemOld);
@@ -172,6 +124,7 @@ const playAgain = function () {
   if (playAgainst==="peer" && peerPlayFirst!=="") {
     //two players
     currentTurn = peerPlayFirst;
+    displayGameStatus();
   }
 };
 
@@ -368,7 +321,7 @@ const gameOver = function() {
 	// Get the modal
 	const modal = $('#myModal');
 
-	// Get the image and insert it inside the modal - use its "alt" text as a caption
+	// Get the image and insert it inside the modal
 	const modalImg = $('#img01');
 	const captionText = $('#caption');
 
@@ -383,6 +336,9 @@ const gameOver = function() {
 	span.onclick = function() {
 		modal.css({ display: "none" });
 	}
+
+  $('#gamestatus').removeClass("imgblue tab blink");
+  $('#gamestatus').html("");
 };
 
 
@@ -411,7 +367,8 @@ const retrieveLocalStore = function() {
 };
 
 const startGame = function() {
-  localStorage.clear(); //start fresh
+  //localStorage.clear(); //start fresh
+  //retrieveLocalStore();
   peerPlayFirst = "";
 
   getCustom(); //in case there are custom settings
@@ -426,6 +383,7 @@ const startGame = function() {
   if (peerPlayFirst!=="") {
     //two players
     currentTurn = peerPlayFirst;
+    displayGameStatus();
   } else {
     currentTurn = "";
   }

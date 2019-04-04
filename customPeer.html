@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="js/game.js"></script>
   <script src="js/jquery.js"></script>
-  <script src="js/dom.js"></script>
+  <script src="js/custom.js"></script>
 
 </head>
 <body>
@@ -32,11 +32,14 @@
       Enter Player A's name: <input type="text" id"playerNameA" name="playerNameA"><br>
       Enter Player B's name: <input type="text" id"playerNameB" name="playerNameB"><br>
       Player A gets to choose an icon first => <br>
-      <img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerIceCream()">
-      <img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerCookie()">
+      <div class="divflex">
+        <div class="divimg"><img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerIceCream()">
+          <div class="centered" id="chooseicecream">Player A</div></div>
+			  <div class="divimg"><img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerCookie()">
+          <div class="centered" id="choosecookie">Player B</div></div>
+      </div>
       <input type="hidden" id="player" name="player" value="icecream">
       <input type="hidden" id="playAgainst" name="playAgainst" value="peer">
-      <br>
       Play first?
       <input type="radio" name="alert" id="playFirstA" onclick="playFirstPeerCall()" checked="checked">Player A
       <input type="radio" name="alert" id="playFirstB" onclick="playFirstPeerCall()">Player B

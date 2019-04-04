@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
 /*@import url('https://fonts.googleapis.com/css?family=Russo+One');*/
 /*@import url('https://fonts.googleapis.com/css?family=Roboto');*/
+@import url('https://fonts.googleapis.com/css?family=Irish+Grover');
 
 /*
 //background
@@ -57,11 +58,26 @@ p {
   font-size: 16px;
 }
 
+.divimg {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  text-align: center;
+  color: black;
+}
+
 .roundswon {
 	color: black;
 	font-size: 30px;
-	font-family: 'Luckiest Guy', cursive;
+	/*font-family: 'Luckiest Guy', cursive;*/
+  font-family: 'Irish Grover', cursive;
   background-color: #a5e09b78;
+}
+
+.gameovercaption {
+	color: black;
+	font-size: 30px;
+	font-family: 'Luckiest Guy', cursive;
 }
 
 nav {
@@ -90,7 +106,8 @@ h1 {
 h2 {
 	color: black;
 	text-align: center;
-	/*padding: 1em;*/
+  margin: 0;
+  padding: 0;
 	font-size: 50px;
 	font-family: 'Caveat Brush', cursive;
 	letter-spacing: 1px;
@@ -118,8 +135,9 @@ p {
 	color: black;
 	text-align: center;
 	/*padding: 1em;*/
-	font-size: 30px;
-	font-family: 'Caveat Brush', cursive;
+	font-size: 25px;
+	/*font-family: 'Caveat Brush', cursive;*/
+  font-family: 'Irish Grover', cursive;
 	letter-spacing: 1px;
   background-color: #a5e09b78;
 }
@@ -198,6 +216,21 @@ span.answeredword {
   border-radius: 0.2em;
 }
 
+.divflex {
+  display: flex;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #50b36147;
+}
+
+.imginstruct {
+  border: 0;
+}
 
 /******************* GAME OVER **********************/
 
