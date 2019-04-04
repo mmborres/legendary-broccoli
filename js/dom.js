@@ -67,6 +67,14 @@ const clickBox = function () {
 
 };
 
+const blinkWinnerRow = function() {
+  for (let g=0; g<winnerArray.length; g++) {
+    const idBox = "idBox_" + winnerArray[g];
+    const jId = "#" + idBox;
+    $(jId).addClass("imgblue tab blink");
+  }
+};
+
 const showBoard = function(index) {
   const idBox = "idBox_" + index;
   const jId = "#" + idBox;
@@ -95,7 +103,7 @@ const playAgain = function () {
 	$('#playagain').html("");
 	$('#playagain').attr('visibility', "hidden");
 	setupBoard();
-	
+
 	if (playFirstAI===true) {
 		startAI();
 	}
@@ -104,7 +112,7 @@ const playAgain = function () {
 const addShuffle = function() {
 	const $playAgain = $('<img>');
     $playAgain.attr('src', "img/playagain.gif");
-	$playAgain.attr('class', "imgbutton");
+	  $playAgain.attr('class', "imgbutton");
     $playAgain.on('click', playAgain );
 
 	$('#playagain').append($playAgain);
@@ -122,20 +130,20 @@ const setupBoard = function() {
   let idb = 0;
   for (let i = 0; i < 3; i++) {
     const $divRow = $('<div>');
-	$divRow.attr('class', "imgrow");
+	  $divRow.attr('class', "imgrow");
 
     for (let j = 0; j < 3; j++) {
     //setup game gameboard
-		const $boxElement = $('<img>');
-		$boxElement.attr('class', "guessword");
-		const idBox = "idBox_" + idb;
-		$boxElement.attr('id', idBox);
-		$boxElement.attr('name', idBox);
+		  const $boxElement = $('<img>');
+		  $boxElement.attr('class', "guessword");
+		  const idBox = "idBox_" + idb;
+		  $boxElement.attr('id', idBox);
+		  $boxElement.attr('name', idBox);
 	    $boxElement.attr('src', "img/back.png");
-		$boxElement.on('click', clickBox );
+		  $boxElement.on('click', clickBox );
 
-		$divRow.append($boxElement);
-		idb += 1;
+		  $divRow.append($boxElement);
+		  idb += 1;
     }
 
     $('#gameboard').append($divRow);
@@ -182,11 +190,11 @@ const getCustom = function(){
 				let tempImg = playerHumanObj.img; //hold
 				playerHumanObj.img = playerAIObj.img;
 				playerAIObj.img = tempImg;
-				
+
 				tempImg = playerHumanObj.winimg; //hold
 				playerHumanObj.winimg = playerAIObj.winimg;
 				playerAIObj.winimg = tempImg;
-				
+
 			}
 		}
 
@@ -205,24 +213,22 @@ const getCustom = function(){
 
 const gameOver = function() {
 	// Get the modal
-	const modal = document.getElementById('myModal');
+	const modal = $('#myModal');
 
 	// Get the image and insert it inside the modal - use its "alt" text as a caption
-	//var img = document.getElementById('myImg');
-	var modalImg = document.getElementById("img01");
-	var captionText = document.getElementById("caption");
-	//img.onclick = function(){
-		modal.style.display = "block";
-		modalImg.src = winnerImg;
-		captionText.innerHTML = winnerMsg;
-	//}
+	const modalImg = $('#img01');
+	const captionText = $('#caption');
+
+  modal.css({ display: "block" });
+	modalImg.attr('src', winnerImg);
+	captionText.html(winnerMsg);
 
 	// Get the <span> element that closes the modal
 	const span = document.getElementsByClassName("close")[0];
 
 	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() { 
-		modal.style.display = "none";
+	span.onclick = function() {
+		modal.css({ display: "none" });
 	}
 };
 
@@ -231,16 +237,12 @@ const localStore = function() {
 	if (typeof(Storage) !== "undefined") {
 		// store
 		localStorage.setItem('playerHumanObj', JSON.stringify(playerHumanObj));
-		//Then to retrieve it from the store and convert to an object again:
-		//playerHumanObj = JSON.parse(localStorage.getItem('playerHumanObj'));
 		localStorage.setItem('playerAIObj', JSON.stringify(playerAIObj));
 	}
 };
 
 const retrieveLocalStore = function() {
 	if (typeof(Storage) !== "undefined") {
-		// store
-		//localStorage.setItem('playerHumanObj', JSON.stringify(playerHumanObj));
 		//Then to retrieve it from the store and convert to an object again:
 		playerHumanObj = JSON.parse(localStorage.getItem('playerHumanObj'));
 		playerAIObj = JSON.parse(localStorage.getItem('playerAIObj'));
@@ -249,9 +251,9 @@ const retrieveLocalStore = function() {
 
 const startGame = function() {
   localStorage.clear(); //start fresh
-  
+
   getCustom(); //in case there are custom settings
-  
+
   // initial display of the game
   setupBoard();
 

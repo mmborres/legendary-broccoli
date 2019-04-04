@@ -5,6 +5,22 @@
   <title>Cookie Monster Tic Tac Toe</title>
 
   <link rel="stylesheet" href="css/style.css">
+
+
+  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAEmYo9GRuOq_duAfrfZ1ymh8eJSYyn418",
+      authDomain: "tictactoe-15207.firebaseapp.com",
+      databaseURL: "https://tictactoe-15207.firebaseio.com",
+      projectId: "tictactoe-15207",
+      storageBucket: "tictactoe-15207.appspot.com",
+      messagingSenderId: "733967995317"
+    };
+    firebase.initializeApp(config);
+  </script>
+
   <script src="js/game.js"></script>
   <script src="js/jquery.js"></script>
   <script src="js/dom.js"></script>
@@ -29,7 +45,7 @@
 		<div id="gameboard"></div>
 		<div id="roundswon" class="roundswon"></div>
 		<div id="playagain"></div>
-		
+
 		<!-- The Modal -->
 		<div id="myModal" class="modal">
 			<span class="close">&times;</span>

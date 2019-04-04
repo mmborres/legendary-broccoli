@@ -3,41 +3,36 @@ let humanPlayer = "X";
 let aiPlayer = "O";
 let winnerPlayer = "";
 let playFirstAI = false;
-
+let winnerArray;
 
 const gameArray = [ "", "", "",
                     "", "", "",
                     "", "", "" ];
 
+//available moves
+const validPairs = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
 
 //check for winning
 const isWinningLine = function (player) {
   const g = gameArray; //for neatness
   const p = player;
-        //horizontal lines
-  if ( g[0]===p && g[1]===p && g[2]===p ||
-       g[3]===p && g[4]===p && g[5]===p ||
-       g[6]===p && g[7]===p && g[8]===p ||
-       //vertical lines
-       g[0]===p && g[3]===p && g[6]===p ||
-       g[1]===p && g[4]===p && g[7]===p ||
-       g[2]===p && g[5]===p && g[8]===p ||
-       //remainging digonal lines
-       g[0]===p && g[4]===p && g[8]===p ||
-       g[2]===p && g[4]===p && g[6]===p ) {
-         winnerPlayer = player;
-         return true; //yes, winning
-       } else {
-         return false; //losing
-       }
-};
+  const v = validPairs;
+  let win = false;
 
-//available moves
-const validPairs = [
-  [0, 1, 2], [3, 4, 5], [6, 7, 8],
-  [0, 3, 6], [1, 4, 7], [2, 5, 8],
-  [0, 4, 8], [2, 4, 6]
-];
+  for (let y=0; y<v.length; y++) {
+    if ( g[ v[y][0] ]===p && g[ v[y][1] ]===p && g[ v[y][2] ]===p ) {
+         winnerArray = v[y];
+         winnerPlayer = player;
+         win = true; //yes, winning
+         break;
+       }
+  }
+  return win;
+};
 
 const countEmpty = function() {
   let total = 0;
@@ -269,20 +264,22 @@ const gamePlay = function(index) {
 
   // check if there's a winner
   if ( checkWinner() ) {
+    blinkWinnerRow();
     return true;
   }
 
   // given an index, get possible placements
   const arrPossiblePlacements = getPossiblePlacements(index);
 
-  // get highest score
-  const highScore = getHighestScore(arrPossiblePlacements);
+  // get highest score row
+  const highScoreRow = getHighestScore(arrPossiblePlacements);
 
   // place O in the nearby empty spot
-  playAI(highScore, index);
+  playAI(highScoreRow, index);
 
   // check if there's a winner
   if ( checkWinner() ) {
+    blinkWinnerRow();
     return true;
   }
 
