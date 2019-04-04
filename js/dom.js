@@ -60,10 +60,15 @@ const clickBox = function () {
 
 const displayGameStatus = function() {
   let name = "";
-  if (currentTurn==="playerA") {
-    name = playerHumanObj.name;
+
+  if (playAgainst==="peer") {
+    if (currentTurn==="playerA") {
+      name = playerHumanObj.name;
+    } else if (currentTurn==="playerB"){
+      name = playerHumanObjB.name;
+    }
   } else {
-    name = playerHumanObjB.name;
+    name = playerHumanObj.name;
   }
 
   $('#gamestatus').html(name + "'s turn now...");
@@ -124,8 +129,9 @@ const playAgain = function () {
   if (playAgainst==="peer" && peerPlayFirst!=="") {
     //two players
     currentTurn = peerPlayFirst;
-    displayGameStatus();
+    //displayGameStatus();
   }
+  displayGameStatus();
 };
 
 const addShuffle = function() {
@@ -187,6 +193,7 @@ const displayRounds = function() {
 const getCustom = function(){
 	const x = window.location.href;
 	if (x.includes("index.html?")) {
+    $('#gamestatus').html("");
 		const customvals = x.split("?")[1]; //holder of values
 
     if (customvals.includes("playAgainst=peer")) {
@@ -383,10 +390,11 @@ const startGame = function() {
   if (peerPlayFirst!=="") {
     //two players
     currentTurn = peerPlayFirst;
-    displayGameStatus();
   } else {
     currentTurn = "";
   }
+
+  displayGameStatus();
 };
 
 $(document).ready( startGame );
