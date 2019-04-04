@@ -4,27 +4,32 @@ let playAgainst = "";
 let smartAI = true;
 let firstPeerPlayer = "";
 
+const IMGCOOKIE = "img/cookieAI.jpg";
+const IMGICECREAM = "img/icHuman.jpg";
+const WINCOOKIE = "img/cookiewins.png";
+const WINICECREAM = "img/icwins.png";
+
 let playerHumanObj = { //default values
   name: "Human",
   player: "X",
-  img: "img/icHuman.jpg",
-  winimg: "img/icwins.png",
+  img: IMGICECREAM,
+  winimg: WINICECREAM,
   roundswon: 0
 };
 
 let playerHumanObjB = { //default values
   name: "Human B",
   player: "O",
-  img: "img/cookieAI.jpg",
-  winimg: "img/cookiewins.png",
+  img: IMGCOOKIE,
+  winimg: WINCOOKIE,
   roundswon: 0
 };
 
 let playerAIObj = { //default values
   name: "Computer",
   player: "O",
-  img: "img/cookieAI.jpg",
-  winimg: "img/cookiewins.png",
+  img: IMGCOOKIE,
+  winimg: WINCOOKIE,
   roundswon: 0
 };
 
@@ -32,7 +37,7 @@ let winnerImg = "img/draw.png";
 let winnerMsg = "It's a draw!";
 
 const clickBox = function () {
-  console.log("");
+  //console.log("");
   const name = this.getAttribute('name');//this.attr('name');
   const idx = name.split('_')[1];
 
@@ -191,9 +196,11 @@ const displayRounds = function() {
 };
 
 const getCustom = function(){
+  let customFound = false;
 	const x = window.location.href;
 	if (x.includes("index.html?")) {
     $('#gamestatus').html("");
+    customFound = true;
 		const customvals = x.split("?")[1]; //holder of values
 
     if (customvals.includes("playAgainst=peer")) {
@@ -234,13 +241,11 @@ const getCustom = function(){
   				playerHumanObj.player = "O";
   				playerHumanObjB.player = "X";
 
-  				let tempImg = playerHumanObj.img; //hold
-  				playerHumanObj.img = playerHumanObjB.img;
-  				playerHumanObjB.img = tempImg;
+          playerHumanObj.img = IMGCOOKIE;
+  				playerHumanObjB.img = IMGICECREAM;
 
-  				tempImg = playerHumanObj.winimg; //hold
-  				playerHumanObj.winimg = playerHumanObjB.winimg;
-  				playerHumanObjB.winimg = tempImg;
+  				playerHumanObj.winimg = WINCOOKIE;
+  				playerHumanObjB.winimg = WINICECREAM;
         }
       }
 
@@ -277,14 +282,11 @@ const getCustom = function(){
 				playerHumanObj.player = "O";
 				playerAIObj.player = "X";
 
-				let tempImg = playerHumanObj.img; //hold
-				playerHumanObj.img = playerAIObj.img;
-				playerAIObj.img = tempImg;
+				playerHumanObj.img = IMGCOOKIE;
+				playerAIObj.img = IMGICECREAM;
 
-				tempImg = playerHumanObj.winimg; //hold
-				playerHumanObj.winimg = playerAIObj.winimg;
-				playerAIObj.winimg = tempImg;
-
+				playerHumanObj.winimg = WINCOOKIE;
+				playerAIObj.winimg = WINICECREAM;
 			}
 		}
 
@@ -322,6 +324,8 @@ const getCustom = function(){
     playFirstAI = false;
     playAgainst = "AI";
   }
+
+  return customFound;
 };
 
 const gameOver = function() {
@@ -378,7 +382,7 @@ const startGame = function() {
   //retrieveLocalStore();
   peerPlayFirst = "";
 
-  getCustom(); //in case there are custom settings
+  const customFound = getCustom(); //in case there are custom settings
 
   // initial display of the game
   setupBoard();
@@ -394,7 +398,9 @@ const startGame = function() {
     currentTurn = "";
   }
 
-  displayGameStatus();
+  if (customFound) {
+    displayGameStatus();
+  }
 };
 
 $(document).ready( startGame );
