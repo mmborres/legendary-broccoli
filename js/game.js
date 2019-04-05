@@ -62,14 +62,18 @@ const getPossiblePlacements = function (index) {
 
     //strategy: handle center, when chosen by player early in the game
     if (index===4 && countEmpty()>7) {
+      const ppArray = [];
       for (let y=0; y< validPairs.length; y++) {
         if ( validPairs[y].includes(4) && (validPairs[y].includes(6) || validPairs[y].includes(8)) ) { //center, choose a corner
           const g0 = validPairs[y][0]; const g1 = validPairs[y][1]; const g2 = validPairs[y][2];
           if ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" ) {
-              pArray.push(validPairs[y]); //only if available
+              //pArray.push(validPairs[y]); //only if available
+              ppArray.push(validPairs[y]); //only if available
           }
         }
       }
+      const idxr = Math.floor(Math.random() * ppArray.length);
+      pArray.push(ppArray[idxr]);
     }
   } //smartAI
 
@@ -122,10 +126,22 @@ const getPossiblePlacements = function (index) {
   return pArray;
 };
 
-const points =  function(str) {
-  if (str==="") return 1;
+const points =  function(str, includeSpace=true) {
+  if (includeSpace) {
+    if (str==="") return 1;
+  }
   if (str===aiPlayer) return 2;
   if (str===humanPlayer) return 3; //human, high score so AI can block it
+  return 0; //if no option
+};
+
+const totalPointsOfArray = function(arr) {
+  let total = 0;
+  for (let x=0; x<arr.length; x++) { //inner is 3
+    const gIdx = arr[x];
+    total += points( gameArray[gIdx], false ); // do not include space
+  }
+  return total;
 };
 
 const getHighestScore = function(pArray) {
@@ -134,6 +150,7 @@ const getHighestScore = function(pArray) {
   let highArray = []; //initial value
   for (let y=0; y<pArray.length; y++) {
     total = 0;
+
     //usual points
     for (let x=0; x<3; x++) { //inner is 3
       const gIdx = pArray[y][x];
@@ -231,6 +248,38 @@ const occupy = function(aIdx) {
   return false;
 };
 
+const potentialPoints = function(array, player) {
+  //return index
+  let highTotal = 0;
+  const a = array;
+  const g = gameArray;
+  let total = 0;
+  let index = -1;
+  const pointsPlayer = points(player);
+  for (let y=0; y<validPairs.length; y++) {
+    for (let x=0; x<a.length; x++) {
+      if ( a!==validPairs[y] && g[ a[x] ] === "" && validPairs[y].includes(a[x]) ) {
+        total = totalPointsOfArray(validPairs[y]);
+        if (total%pointsPlayer === 0) {
+          // probably found a match
+          total += 50; //increase score
+        }
+        total += pointsPlayer;  //add possible candidate
+        if (total>highTotal) {
+          highTotal = total;
+          index = a[x];
+        }
+      }
+    }
+  }
+  return index;
+};
+
+const retOpponent = function (str) {
+  if (str==="X") return "O";
+  if (str==="O") return "X";
+}
+
 const playAI = function(array, index) {
 try {
   let placed = false;
@@ -239,30 +288,42 @@ try {
     gIdx = 1; //choose center for candidate rows, other than those it belongs to
   }
 
-  if ( gIdx-1 >=0 ) {
-	  //left exists
-	  let aIdx = array[gIdx-1];
-	  placed = occupy(aIdx);
-	  if (placed===false) {
-      aIdx = array[gIdx-2];
-  	  placed = occupy(aIdx);
-    }
-  }
-  if ( placed===false && gIdx+1 <3 ) {
-	  //right exists
-	  let aIdx = array[gIdx+1];
-	  placed = occupy(aIdx);
-	  //if leftmost
-	  if (placed===false) {
-      aIdx = array[gIdx+2];
-  	  placed = occupy(aIdx);
+  if (smartAI) {
+    const tempIdx = array[gIdx];
+    const highIndex = potentialPoints(array, retOpponent(gameArray[tempIdx]) );
+    if (highIndex>-1) {
+        placed = occupy(highIndex);
     }
   }
 
-  //check itself
-  if (placed === false) {
-    placed = occupy(array[gIdx]);
-  }
+  if (placed===false) { //if no high potential scoring index found
+
+    if ( gIdx-1 >=0 ) {
+  	  //left exists
+  	  let aIdx = array[gIdx-1];
+  	  placed = occupy(aIdx);
+  	  if (placed===false) {
+        aIdx = array[gIdx-2];
+    	  placed = occupy(aIdx);
+      }
+    }
+    if ( placed===false && gIdx+1 <3 ) {
+  	  //right exists
+  	  let aIdx = array[gIdx+1];
+  	  placed = occupy(aIdx);
+  	  //if leftmost
+  	  if (placed===false) {
+        aIdx = array[gIdx+2];
+    	  placed = occupy(aIdx);
+      }
+    }
+
+    //check itself
+    if (placed === false) {
+      placed = occupy(array[gIdx]);
+    }
+
+  } //
 
   return placed;
 } catch (e) {
