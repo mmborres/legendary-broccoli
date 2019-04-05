@@ -34,10 +34,11 @@ However there are ways to customise the game via the Custom page.
 
 This web application uses HTML, CSS, Javascript and jQuery. 
 
-  * Front-end uses HTML
-  * Animations through CSS
-  * DOM manipulation, logic and back-end processing using Javacript and jQuery
-  * Semi-smart AI uses the Mini-Max Algorithm as inspiration
+  * Front-end uses HTML utilising Google Fonts and Giphy images
+  * Styling and animations through CSS
+  * DOM manipulation using Javacript and jQuery
+  * Logic and back-end processing using Javascript utilising Data structures and Math library calls
+  * Semi-smart AI uses the Mini-Max Algorithm as basis
   * Smart AI uses greedy strategy on top of the Mini-Max algorithm
   * Windows Localstorage is also implemented
   
