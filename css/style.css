@@ -195,6 +195,7 @@ span.answeredword {
 }
 
 .divflex {
+  text-align: center;
   display: flex;
 }
 
