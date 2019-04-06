@@ -40,12 +40,12 @@ This web application uses HTML, CSS, Javascript and jQuery.
   * Logic and back-end processing using Javascript utilising Data structures and Math library calls
   * Semi-smart AI uses the Mini-Max Algorithm as basis
   * Smart AI uses greedy strategy on top of the Mini-Max algorithm
-  * Windows Localstorage is also implemented
+  * Windows Localstorage is fully supported
   
 ### Wishlist ###
 
   * Replace blinking winning row with SVG
-  * Implement Firebase
+  * Implement Firebase or mult-player setup on a network
   * Implement levels and scoring complexity
 
 ![Winnner](winner.png "When player wins a round")
