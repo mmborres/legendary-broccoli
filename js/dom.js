@@ -28,7 +28,7 @@ let playerHumanObjB = { //default values
 };
 
 let playerAIObj = { //default values
-  name: "Computer",
+  name: "Smart AI",
   player: "O",
   img: IMGCOOKIE,
   winimg: WINCOOKIE,
@@ -215,7 +215,9 @@ const getCustom = function(){
   			playerName = playerName.substring(0, playerName.indexOf('&'));
   			if (playerName!=="") {
           playerHumanObj.name = playerName;
-        }
+        } else {
+		  playerHumanObj.name = "Player A";
+		}
   		}
 
       //player B
@@ -224,7 +226,9 @@ const getCustom = function(){
   			playerName = playerName.substring(0, playerName.indexOf('&'));
   			if (playerName!=="") {
           playerHumanObjB.name = playerName;
-        }
+        } else {
+		  playerHumanObjB.name = "Player B";
+		}
   		}
 
       //player icecream
@@ -266,7 +270,11 @@ const getCustom = function(){
   		if (customvals.includes("playerName=")) {
   			playerName = customvals.split("playerName=")[1];
 			playerName = playerName.substring(0, playerName.indexOf('&'));
-			if (playerName!=="") { playerHumanObj.name = playerName; }
+			if (playerName!=="") { 
+			playerHumanObj.name = playerName; 
+			} else {
+		  playerHumanObj.name = "Human";
+		}
 		  }
 
 		let player = ""; //marker
@@ -313,8 +321,11 @@ const getCustom = function(){
 
 			if (compdumb==="false") {
 				smartAI = true;
+				playerAIObj.name = "Smart AI";
+		
 			} else {
 				smartAI = false;
+				playerAIObj.name = "Semi-smart AI";
 			}
 		}
 
