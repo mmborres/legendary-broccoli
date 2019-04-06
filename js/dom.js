@@ -1,5 +1,5 @@
 
-/////////////////////////// Game Page
+/////////////////////////// Game Page DOM
 let playAgainst = "";
 let smartAI = true;
 let firstPeerPlayer = "";
@@ -8,6 +8,8 @@ const IMGCOOKIE = "img/cookieAI.jpg";
 const IMGICECREAM = "img/icHuman.jpg";
 const WINCOOKIE = "img/cookiewins.png";
 const WINICECREAM = "img/icwins.png";
+const DRAWMSG = "It's a draw!";
+const DRAWIMG = "img/draw.png";
 
 let playerHumanObj = { //default values
   name: "Human",
@@ -33,8 +35,8 @@ let playerAIObj = { //default values
   roundswon: 0
 };
 
-let winnerImg = "img/draw.png";
-let winnerMsg = "It's a draw!";
+let winnerImg = DRAWIMG
+let winnerMsg = DRAWMSG;
 
 const clickBox = function () {
   //console.log("");
@@ -362,19 +364,51 @@ const localStore = function() {
 
     localStorage.setItem('peerPlayFirst', peerPlayFirst);
     localStorage.setItem('playFirstAI', playFirstAI);
+	localStorage.setItem('smartAI', smartAI);
+    localStorage.setItem('playAgainst', playAgainst);
+
 	}
 };
 
 const retrieveLocalStore = function() {
+	let temp;
 	if (typeof(Storage) !== "undefined") {
 		//Then to retrieve it from the store and convert to an object again:
-		playerHumanObj = JSON.parse(localStorage.getItem('playerHumanObj'));
-		playerAIObj = JSON.parse(localStorage.getItem('playerAIObj'));
-		playerHumanObjB = JSON.parse(localStorage.getItem('playerHumanObjB'));
-
-    peerPlayFirst = localStorage.getItem('peerPlayFirst');
-    playFirstAI = localStorage.getItem('playFirstAI');
+		temp = JSON.parse(localStorage.getItem('playerHumanObj'));
+		if (temp!=null) {
+			playerHumanObj = temp;
+		}
+		temp = JSON.parse(localStorage.getItem('playerAIObj'));
+		if (temp!=null) {
+			playerAIObj = temp;
+		}
+		temp = JSON.parse(localStorage.getItem('playerHumanObjB'));
+		if (temp!=null) {
+			playerHumanObjB = temp;
+		}
+		
+		temp = JSON.parse(localStorage.getItem('peerPlayFirst'));
+		if (temp!=null) {
+			peerPlayFirst = temp;
+		}
+		temp = JSON.parse(localStorage.getItem('playFirstAI'));
+		if (temp!=null) {
+			playFirstAI = temp;
+		}
+		temp = JSON.parse(localStorage.getItem('smartAI'));
+		if (temp!=null) {
+			smartAI = temp;
+		}
+		
+		/*temp = JSON.parse(localStorage.getItem('playAgainst'));
+		if (temp!=null) {
+			playAgainst = temp;
+		}*/
 	}
+};
+
+const resetStats = function() {
+   localStorage.clear(); //start fresh
 };
 
 const startGame = function() {

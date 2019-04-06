@@ -59,22 +59,6 @@ const getPossiblePlacements = function (index) {
         }
       }
     }
-
-    //strategy: handle center, when chosen by player early in the game
-    if (index===4 && countEmpty()>7) {
-      const ppArray = [];
-      for (let y=0; y< validPairs.length; y++) {
-        if ( validPairs[y].includes(4) && (validPairs[y].includes(6) || validPairs[y].includes(8)) ) { //center, choose a corner
-          const g0 = validPairs[y][0]; const g1 = validPairs[y][1]; const g2 = validPairs[y][2];
-          if ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" ) {
-              //pArray.push(validPairs[y]); //only if available
-              ppArray.push(validPairs[y]); //only if available
-          }
-        }
-      }
-      const idxr = Math.floor(Math.random() * ppArray.length);
-      pArray.push(ppArray[idxr]);
-    }
   } //smartAI
 
   //usual strategy
@@ -161,7 +145,7 @@ const getHighestScore = function(pArray) {
       //additional points for candidate wins
       const g0 = pArray[y][0]; const g1 = pArray[y][1]; const g2 = pArray[y][2];
 
-      //AI winning, highest scoe
+      //AI winning, highest score
       if ( ( gameArray[g0]==="" || gameArray[g1]==="" || gameArray[g2]==="" )
           && ( (gameArray[g0]===aiPlayer && gameArray[g0]===gameArray[g1]) ||
             (gameArray[g2]===aiPlayer && gameArray[g2]===gameArray[g1]) ||
@@ -187,7 +171,10 @@ const getHighestScore = function(pArray) {
       highArray.push(pArray[y]);
     }
   }
-  return highArray[0];
+  return {
+	  array: highArray[0],
+	  points: hightotal
+  };
 };
 
 const checkWinner = function() {
@@ -226,8 +213,8 @@ const checkWinner = function() {
 	    //reset
 	    resetGameArray();
   } else {
-	  winnerImg = "img/draw.png";
-	  winnerMsg = "It's a draw!"
+	  winnerImg = DRAWIMG;
+	  winnerMsg = DRAWMSG;
   }
   return win;
 };
@@ -260,7 +247,7 @@ const potentialPoints = function(array, player) {
     for (let x=0; x<a.length; x++) {
       if ( a!==validPairs[y] && g[ a[x] ] === "" && validPairs[y].includes(a[x]) ) {
         total = totalPointsOfArray(validPairs[y]);
-        if (total%pointsPlayer === 0) {
+        if (total>0 && total%pointsPlayer === 0) {
           // probably found a match
           total += 50; //increase score
         }
@@ -280,22 +267,35 @@ const retOpponent = function (str) {
   if (str==="O") return "X";
 }
 
-const playAI = function(array, index) {
+const playAI = function(arrayObj, index) {
 try {
+  let array = arrayObj.array;
+  let pts = arrayObj.points;
   let placed = false;
   let gIdx = array.indexOf(index);
   if (gIdx<0) {
     gIdx = 1; //choose center for candidate rows, other than those it belongs to
   }
 
-  if (smartAI) {
-    const tempIdx = array[gIdx];
-    const highIndex = potentialPoints(array, retOpponent(gameArray[tempIdx]) );
-    if (highIndex>-1) {
-        placed = occupy(highIndex);
-    }
-  }
-
+  if (smartAI && pts < 50) {
+	if (array[gIdx]===4) { //handle center
+		const t = [0, 2, 6, 8] //choose from corners
+		let counter = 0;
+		do {
+			let idxr = Math.floor(Math.random() * t.length);
+			placed = occupy(t[idxr]);
+			counter++;
+		} while (placed===false && counter < t.length)
+	}
+    if (!placed) { 
+		const tempIdx = array[gIdx];
+		const highIndex = potentialPoints(array, retOpponent(gameArray[tempIdx]) ); //get high scoring spot, tada
+		if (highIndex>-1) {
+			placed = occupy(highIndex);
+		}
+	}
+  } //smartAI
+  
   if (placed===false) { //if no high potential scoring index found
 
     if ( gIdx-1 >=0 ) {
@@ -341,7 +341,7 @@ const resetGameArray = function() {
 const gamePlay = function(index) {
   // setup array
   if (currentTurn==="playerA") {
-    gameArray[index] = playerHumanObj.player;//humanPlayer;
+    gameArray[index] = playerHumanObj.player;
   } else if (currentTurn==="playerB"){
     gameArray[index] = playerHumanObjB.player;
   } else { //AI
@@ -361,10 +361,10 @@ const gamePlay = function(index) {
     const arrPossiblePlacements = getPossiblePlacements(index);
 
     // get highest score row
-    const highScoreRow = getHighestScore(arrPossiblePlacements);
+    const highScoreRowObj = getHighestScore(arrPossiblePlacements);
 
     // place O in the nearby empty spot
-    playAI(highScoreRow, index);
+    playAI(highScoreRowObj, index);
 
     // check if there's a winner
     if ( checkWinner() ) {
