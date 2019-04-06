@@ -503,6 +503,13 @@ const startGame = function() {
 		const retrieved = retrieveLocalStore(); //in case game is in progress
 		const customFound = getCustom(); //in case there are custom settings
 
+		if (peerPlayFirst!=="") {
+			//two players
+			currentTurn = peerPlayFirst;
+		} else {
+			currentTurn = "";
+		}
+		
 		if (customFound || retrieved) {
 			displayGameStatus();
 		} else { //no customisation nor local storage
@@ -517,13 +524,6 @@ const startGame = function() {
 
 		if (playFirstAI || playFirstAI===true) {
 			startAI();
-		}
-
-		if (peerPlayFirst!=="") {
-			//two players
-			currentTurn = peerPlayFirst;
-		} else {
-			currentTurn = "";
 		}
 
 	}
