@@ -1,83 +1,37 @@
 @import url('https://fonts.googleapis.com/css?family=Caveat+Brush');
-/*@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');*/
 @import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
-/*@import url('https://fonts.googleapis.com/css?family=Russo+One');*/
-/*@import url('https://fonts.googleapis.com/css?family=Roboto');*/
 @import url('https://fonts.googleapis.com/css?family=Irish+Grover');
 
-/*
-//background
-https://media.giphy.com/media/l0K4hBbFA3XBcD1V6/giphy.gif
-
-//winner gameover
-https://media.giphy.com/media/d2W6OUVGqrhyAbG8/giphy.gif
-
-//no winner
-https://media.giphy.com/media/3osxYh5db5WFXxe9i0/giphy.gif
-*/
-
 body {
-  /*margin: 0;
-  padding: 0;*/
-  background-image: url("https://media.giphy.com/media/d3MKb2hCZaNH63zq/giphy.gif");
+  /*https://media.giphy.com/media/d3MKb2hCZaNH63zq/giphy.gif*/
+  background-image: url("../img/giphybig.webp");
+  
+  /* Image is centered vertically and horizontally at all times */
+  background-position: top center;
+  
+  /* Image doesn't repeat */
+  background-repeat: no-repeat;
+  
+  /* Makes the image fixed in the viewport so that it doesn't move when 
+     the content height is greater than the image height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based on its container's size */
   background-size: cover;
-  /*font-family: 'Caveat Brush', cursive;*/
-  /*font-family: 'Gloria Hallelujah', cursive;*/
-  /*font-family: 'Luckiest Guy', cursive;*/
-  /*font-family: 'Russo One', sans-serif;*/
-  /*font-family: 'Roboto', sans-serif;*/
 }
 
-.container {
-  max-width: 960px; /* common value, responsive design */
-  margin: 0 auto;
-
-  padding: 1em; /*space inside the box*/
-   /*space outside the box*/
-  border-bottom-left-radius: 1em;
-  border-bottom-right-radius: 1em;
-}
-
-/*body {
-  background-color: #222;
-  margin: 0;
-  padding: 0;
-}*/
-
-/*.container {
-  max-width: 960px;
-  margin: 0 auto;
-  background-color: #ccc;
-  padding: 1em;
-  border-bottom-left-radius: 1em;
-  border-bottom-right-radius: 1em;
-}*/
+/* For mobile devices */
+@media only screen and (max-width: 767px) {
+  body {
+    /* The file size of this background image is 93% smaller
+     * to improve page load speed on mobile internet connections */
+    background-image: url("../img/giphysmall.webp");
+  }
+	}
 
 p {
   text-align:justify;
   font-size: 16px;
-}
-
-.divimg {
-  padding: 0;
-  margin: 0;
-  position: relative;
-  text-align: center;
-  color: black;
-}
-
-.roundswon {
-	color: black;
-	font-size: 30px;
-	/*font-family: 'Luckiest Guy', cursive;*/
-  font-family: 'Irish Grover', cursive;
-  background-color: #a5e09b78;
-}
-
-.gameovercaption {
-	color: black;
-	font-size: 30px;
-	font-family: 'Luckiest Guy', cursive;
 }
 
 nav {
@@ -116,7 +70,6 @@ h2 {
 h3 {
 	color: black;
 	text-align: center;
-	/*padding: 1em;*/
 	font-size: 30px;
 	font-family: 'Caveat Brush', cursive;
 	letter-spacing: 1px;
@@ -125,38 +78,17 @@ h3 {
 p {
 	color: black;
 	text-align: center;
-	/*padding: 1em;*/
 	font-size: 30px;
 	font-family: 'Caveat Brush', cursive;
 	letter-spacing: 1px;
 }
 
-.pClass {
-	color: black;
-	text-align: center;
-	/*padding: 1em;*/
-	font-size: 25px;
-	/*font-family: 'Caveat Brush', cursive;*/
-  font-family: 'Irish Grover', cursive;
-	letter-spacing: 1px;
-  background-color: #a5e09b78;
-}
-
-
 div {
 	text-align: center;
-	/*padding: 1em;*/
-}
-
-.imgrow {
-	display: flex;
-	padding: 0;
-	margin: 0;
 }
 
 main {
   display: inline-block;
-  /*width: 75%;*/
 }
 
 main img {
@@ -167,13 +99,6 @@ main img {
 img {
   border: 5px solid green;
   border-radius: 4px;
-  /*padding: 5px;*/
-  /*width: 150px;
-  height: 150px;*/
-}
-
-.imgbutton {
-	border: 0;
 }
 
 aside {
@@ -190,16 +115,72 @@ aside ul {
   padding-left: 17px;
 }
 
+
+/** CLASSES **/
+
+.container {
+  max-width: 960px; /* common value, responsive design */
+  margin: 0 auto;
+
+  padding: 1em; /*space inside the box*/
+   /*space outside the box*/
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+
+.divimg {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  text-align: center;
+  color: black;
+}
+
+.roundswon {
+	color: black;
+	font-size: 30px;
+  font-family: 'Irish Grover', cursive;
+  background-color: #a5e09b78;
+}
+
+.gamestatus {
+	color: black;
+	font-size: 30px;
+  font-family: 'Irish Grover', cursive;
+  background-color: #a5e09bde;
+}
+
+.gameovercaption {
+	color: black;
+	font-size: 30px;
+	font-family: 'Luckiest Guy', cursive;
+}
+
+.pClass {
+	color: black;
+	text-align: center;
+	font-size: 25px;
+  font-family: 'Irish Grover', cursive;
+	letter-spacing: 1px;
+  background-color: #a5e09b78;
+}
+
+.imgrow {
+	display: flex;
+	padding: 0;
+	margin: 0;
+}
+
+.imgbutton {
+	border: 0;
+}
+
 span.guessword {
   display: inline; /* the default for span */
   width: 200px;
   height: 200px;
-  /*padding: 10px;*/
   border: 2px solid green;
-  /*background-color: lightblue;*/
-  /*line-height: 50px;*/
   font-size: 100px;
-  /*color: lightblue;*/
   border-radius: 0.2em;
 }
 
@@ -207,10 +188,7 @@ span.answeredword {
   display: inline; /* the default for span */
   width: 200px;
   height: 200px;
-  /*padding: 10px;*/
   border: 2px solid green;
-  /*background-color: lightblue;*/
-  /*line-height: 50px;*/
   font-size: 100px;
   color: black;
   border-radius: 0.2em;
@@ -320,8 +298,9 @@ span.answeredword {
   }
 }
 
+/******************* GAME OVER **********************/
 
-/*** ****/
+/*** BLINK ****/
 .blink {
 	-webkit-animation: blink 1s linear infinite;
 	-moz-animation: blink 1s linear infinite;
@@ -360,4 +339,5 @@ span.answeredword {
 	50.01% { opacity: 0; }
 	100% { opacity: 0; }
 }
-/**** ****/
+
+/*** BLINK ****/

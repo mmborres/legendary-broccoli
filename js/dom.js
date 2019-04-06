@@ -1,5 +1,5 @@
-
 /////////////////////////// Game Page DOM
+
 let playAgainst = "";
 let smartAI = true;
 let firstPeerPlayer = "";
@@ -39,8 +39,7 @@ let winnerImg = DRAWIMG
 let winnerMsg = DRAWMSG;
 
 const clickBox = function () {
-  //console.log("");
-  const name = this.getAttribute('name');//this.attr('name');
+  const name = this.getAttribute('name');
   const idx = name.split('_')[1];
 
   const gameover = gamePlay(parseInt(idx));
@@ -50,6 +49,7 @@ const clickBox = function () {
 	  addShuffle();
 	  displayRounds();
 	  removeHandler();
+	  currentTurn = peerPlayFirst;
 	  localStore();
   } else {
     if (playAgainst==="peer") {
@@ -126,28 +126,30 @@ const playAgain = function () {
 	$('#playagain').html("");
 	$('#playagain').attr('visibility', "hidden");
 
-  getCustom();
+	retrieveLocalStore();
 	setupBoard();
 
-	if (playFirstAI===true) {
+	if (playFirstAI || playFirstAI===true) {
 		startAI();
 	}
 
-  if (playAgainst==="peer" && peerPlayFirst!=="") {
-    //two players
-    currentTurn = peerPlayFirst;
-    //displayGameStatus();
-  }
   displayGameStatus();
 };
 
 const addShuffle = function() {
 	const $playAgain = $('<img>');
     $playAgain.attr('src', "img/playagain.gif");
-	  $playAgain.attr('class', "imgbutton");
+	$playAgain.attr('class', "imgbutton");
     $playAgain.on('click', playAgain );
 
+	const $resetstats = $('<img>');
+	$resetstats.attr('src', "img/resetstats.png");
+	$resetstats.attr('class', "imgbutton");
+    $resetstats.on('click', resetStats );
+	
 	$('#playagain').append($playAgain);
+	$('#playagain').append($resetstats);
+	
 	$('#playagain').attr('visibility', "visible");
 };
 
@@ -218,6 +220,7 @@ const getCustom = function(){
         } else {
 		  playerHumanObj.name = "Player A";
 		}
+		  playerHumanObj.roundswon = 0;
   		}
 
       //player B
@@ -229,6 +232,7 @@ const getCustom = function(){
         } else {
 		  playerHumanObjB.name = "Player B";
 		}
+		  playerHumanObjB.roundswon = 0;
   		}
 
       //player icecream
@@ -240,6 +244,16 @@ const getCustom = function(){
   			if (player==="icecream") { //default
   				humanPlayer = "X";
   				aiPlayer = "O";
+				
+				playerHumanObj.player = "X";
+				playerHumanObjB.player = "O";
+
+				playerHumanObj.img = IMGICECREAM;
+				playerHumanObjB.img = IMGCOOKIE;
+
+				playerHumanObj.winimg = WINICECREAM;
+				playerHumanObjB.winimg = WINCOOKIE;
+
   			} else {
   				humanPlayer = "O";
   				aiPlayer = "X";
@@ -247,7 +261,7 @@ const getCustom = function(){
   				playerHumanObj.player = "O";
   				playerHumanObjB.player = "X";
 
-          playerHumanObj.img = IMGCOOKIE;
+				playerHumanObj.img = IMGCOOKIE;
   				playerHumanObjB.img = IMGICECREAM;
 
   				playerHumanObj.winimg = WINCOOKIE;
@@ -260,6 +274,9 @@ const getCustom = function(){
     		if (customvals.includes("playFirstPeer=")) {
     			peerPlayFirst = customvals.split("playFirstPeer=")[1];
   			  peerPlayFirst = peerPlayFirst.substring(0, peerPlayFirst.indexOf('&'));
+			  
+			  //AI
+			  playFirstAI = false;
         }
 
     } else {
@@ -275,6 +292,8 @@ const getCustom = function(){
 			} else {
 		  playerHumanObj.name = "Human";
 		}
+		  playerHumanObj.roundswon = 0;
+		  playerAIObj.roundswon = 0; //reset scores
 		  }
 
 		let player = ""; //marker
@@ -285,18 +304,30 @@ const getCustom = function(){
 			if (player==="icHuman") { //default
 				humanPlayer = "X";
 				aiPlayer = "O";
+				
+				playerHumanObj.player = "X";
+				playerAIObj.player = "O";
+				
+				playerHumanObj.img = IMGICECREAM;
+				playerAIObj.img = IMGCOOKIE;
+				
+				playerHumanObj.winimg = WINICECREAM;
+				playerAIObj.winimg = WINCOOKIE;
+				
+				
 			} else {
 				humanPlayer = "O";
 				aiPlayer = "X";
 
 				playerHumanObj.player = "O";
 				playerAIObj.player = "X";
-
+				
 				playerHumanObj.img = IMGCOOKIE;
 				playerAIObj.img = IMGICECREAM;
-
+				
 				playerHumanObj.winimg = WINCOOKIE;
 				playerAIObj.winimg = WINICECREAM;
+				
 			}
 		}
 
@@ -310,6 +341,9 @@ const getCustom = function(){
 			} else {
 				playFirstAI = true;
 			}
+			
+			//peer
+			peerPlayFirst = "";
 		}
 
     let compdumb = ""; //smart or dumb AI
@@ -328,15 +362,8 @@ const getCustom = function(){
 				playerAIObj.name = "Semi-smart AI";
 			}
 		}
-
-
     }
-  } else {
-    //defaults
-    smartAI = true;
-    playFirstAI = false;
-    playAgainst = "AI";
-  }
+  } 
 
   return customFound;
 };
@@ -368,6 +395,8 @@ const gameOver = function() {
 
 const localStore = function() {
 	if (typeof(Storage) !== "undefined") {
+		localStorage.setItem('previous', true);
+		
 		// store
 		localStorage.setItem('playerHumanObj', JSON.stringify(playerHumanObj));
 		localStorage.setItem('playerAIObj', JSON.stringify(playerAIObj));
@@ -378,74 +407,126 @@ const localStore = function() {
 	localStorage.setItem('smartAI', smartAI);
     localStorage.setItem('playAgainst', playAgainst);
 
+	localStorage.setItem('aiPlayer', aiPlayer);
+	localStorage.setItem('humanPlayer', humanPlayer);
+	
+	localStorage.setItem('currentTurn', currentTurn);
 	}
 };
 
 const retrieveLocalStore = function() {
 	let temp;
+	let retrieved = false;
 	if (typeof(Storage) !== "undefined") {
-		//Then to retrieve it from the store and convert to an object again:
-		temp = JSON.parse(localStorage.getItem('playerHumanObj'));
-		if (temp!=null) {
-			playerHumanObj = temp;
-		}
-		temp = JSON.parse(localStorage.getItem('playerAIObj'));
-		if (temp!=null) {
-			playerAIObj = temp;
-		}
-		temp = JSON.parse(localStorage.getItem('playerHumanObjB'));
-		if (temp!=null) {
-			playerHumanObjB = temp;
-		}
+		const previous = localStorage.getItem('previous');
 		
-		temp = JSON.parse(localStorage.getItem('peerPlayFirst'));
-		if (temp!=null) {
-			peerPlayFirst = temp;
+		if (previous || previous==="true") {
+			//Then to retrieve it from the store and convert to an object again:
+			temp = JSON.parse(localStorage.getItem('playerHumanObj'));
+			if (temp!=null) {
+				playerHumanObj = temp;
+			}
+			temp = JSON.parse(localStorage.getItem('playerAIObj'));
+			if (temp!=null) {
+				playerAIObj = temp;
+			}
+			temp = JSON.parse(localStorage.getItem('playerHumanObjB'));
+			if (temp!=null) {
+				playerHumanObjB = temp;
+			}
+			
+			temp = localStorage.getItem('peerPlayFirst');
+			if (temp!=null) {
+				peerPlayFirst = temp; //playerA or playerB
+			}
+			temp = localStorage.getItem('playFirstAI');
+			if (temp!=null) {
+
+				if (temp || temp===true || temp==="true") {
+					playFirstAI = true;
+				}
+				if (!temp || temp===false || temp==="false") {
+					playFirstAI = false;
+				}
+			}
+			temp = localStorage.getItem('smartAI');
+			if (temp!=null) {
+				
+				if (temp || temp===true || temp==="true") {
+					smartAI = true;
+				}
+				if (!temp || temp===false || temp==="false") {
+					smartAI = false;
+				}
+			}
+			
+			temp = localStorage.getItem('playAgainst');
+			if (temp!=null) {
+				playAgainst = temp; //peer
+			}
+			
+			temp = localStorage.getItem('aiPlayer');
+			if (temp!=null) {
+				aiPlayer = temp; //X or O
+			}
+			temp = localStorage.getItem('humanPlayer');
+			if (temp!=null) {
+				humanPlayer = temp;
+			}
+			temp = localStorage.getItem('currentTurn');
+			if (temp!=null) {
+				currentTurn = temp; //playerA
+			}
+				
+			retrieved = true;
 		}
-		temp = JSON.parse(localStorage.getItem('playFirstAI'));
-		if (temp!=null) {
-			playFirstAI = temp;
-		}
-		temp = JSON.parse(localStorage.getItem('smartAI'));
-		if (temp!=null) {
-			smartAI = temp;
-		}
-		
-		/*temp = JSON.parse(localStorage.getItem('playAgainst'));
-		if (temp!=null) {
-			playAgainst = temp;
-		}*/
 	}
+	return retrieved;
 };
 
 const resetStats = function() {
+   alert("This will reset scores to zero, as well as the game. Are you sure?");
    localStorage.clear(); //start fresh
+   
+   	$('#gameboard').html("");
+	$('#playagain').html("");
+	$('#playagain').attr('visibility', "hidden");
+	
+   location.reload();
 };
 
 const startGame = function() {
-  //localStorage.clear(); //start fresh
-  //retrieveLocalStore();
-  peerPlayFirst = "";
+	
+	const x = window.location.href;
+	if (x.includes("index.html")) {
+		
+		const retrieved = retrieveLocalStore(); //in case game is in progress
+		const customFound = getCustom(); //in case there are custom settings
 
-  const customFound = getCustom(); //in case there are custom settings
+		if (customFound || retrieved) {
+			displayGameStatus();
+		} else { //no customisation nor local storage
+			//defaults
+			smartAI = true;
+			playFirstAI = false;
+			playAgainst = "AI";
+		}
+		
+		// initial display of the game
+		setupBoard();
 
-  // initial display of the game
-  setupBoard();
+		if (playFirstAI || playFirstAI===true) {
+			startAI();
+		}
 
-  if (playFirstAI===true) {
-    startAI();
-  }
+		if (peerPlayFirst!=="") {
+			//two players
+			currentTurn = peerPlayFirst;
+		} else {
+			currentTurn = "";
+		}
 
-  if (peerPlayFirst!=="") {
-    //two players
-    currentTurn = peerPlayFirst;
-  } else {
-    currentTurn = "";
-  }
-
-  if (customFound) {
-    displayGameStatus();
-  }
+	}
 };
 
 $(document).ready( startGame );

@@ -277,7 +277,7 @@ try {
     gIdx = 1; //choose center for candidate rows, other than those it belongs to
   }
 
-  if (smartAI && pts < 50) {
+  if (smartAI && pts < 50) { //50 points or higher means a row is targeted already
 	if (array[gIdx]===4) { //handle center
 		const t = [0, 2, 6, 8] //choose from corners
 		let counter = 0;
@@ -363,7 +363,7 @@ const gamePlay = function(index) {
     // get highest score row
     const highScoreRowObj = getHighestScore(arrPossiblePlacements);
 
-    // place O in the nearby empty spot
+    // place in the nearby empty spot
     playAI(highScoreRowObj, index);
 
     // check if there's a winner
