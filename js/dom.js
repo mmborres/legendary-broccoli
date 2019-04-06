@@ -525,6 +525,11 @@ const startGame = function() {
 		if (playFirstAI || playFirstAI===true) {
 			startAI();
 		}
+		
+		// save new settings
+		if (customFound) {
+			localStore();
+		}
 
 	}
 };
