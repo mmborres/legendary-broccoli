@@ -1,7 +1,7 @@
 Play the Cookie Monster Tic-Tac-Toe
 ============
 
-Live: [Cookie Monster Tic-Tac-Toe](https://mmborres.github.io/legendary-broccoli/)
+Live: [Cookie Monster Tic-Tac-Toe](https://mmborres.github.io/legendary-broccoli/index.html)
 ------------
 
 ![Default Game](defaultgame.png "Default Game")
