@@ -140,7 +140,7 @@ aside ul {
 	color: black;
 	font-size: 30px;
   font-family: 'Irish Grover', cursive;
-  background-color: #a5e09b78;
+  background-color: #a5e09bde; /*#a5e09b78;*/
 }
 
 .gamestatus {
@@ -162,7 +162,7 @@ aside ul {
 	font-size: 25px;
   font-family: 'Irish Grover', cursive;
 	letter-spacing: 1px;
-  background-color: #a5e09b78;
+  background-color: #a5e09bde; /*#a5e09b78;*/
 }
 
 .imgrow {
