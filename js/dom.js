@@ -121,7 +121,7 @@ const showBoard = function(index) {
 };
 
 const playAgain = function () {
-	retrieveLocalStore();
+	//retrieveLocalStore();
 	$('#gameboard').html("");
 	$('#playagain').html("");
 	$('#playagain').attr('visibility', "hidden");
