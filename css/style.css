@@ -32,14 +32,14 @@ body {
 
 p {
   text-align:justify;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 nav {
   text-align: center;
   font-weight: bold;
   vertical-align: text-bottom;
-  font-size: 50px;
+  font-size: 35px;
   font-family: 'Luckiest Guy', cursive;
   padding: 5px;
 }
@@ -63,7 +63,7 @@ h2 {
 	text-align: center;
   margin: 0;
   padding: 0;
-	font-size: 50px;
+	font-size: 35px;
 	font-family: 'Caveat Brush', cursive;
 	letter-spacing: 1px;
 }
@@ -122,7 +122,7 @@ footer {
 	background-color: #0d2c40;
 	color: white;
 	font-family: "Droid Serif", serif;
-	font-size: 18px;
+	font-size: 16px;
 	letter-spacing: .08em;
 	font-weight: 500;
 }
@@ -149,14 +149,14 @@ footer {
 
 .roundswon {
 	color: black;
-	font-size: 30px;
+	font-size: 25px;
   font-family: 'Irish Grover', cursive;
   background-color: #a5e09bde; /*#a5e09b78;*/
 }
 
 .gamestatus {
 	color: black;
-	font-size: 30px;
+	font-size: 25px;
   font-family: 'Irish Grover', cursive;
   background-color: #a5e09bde;
 }
@@ -170,7 +170,7 @@ footer {
 .pClass {
 	color: black;
 	text-align: center;
-	font-size: 25px;
+	font-size: 23px;
   font-family: 'Irish Grover', cursive;
 	letter-spacing: 1px;
   background-color: #a5e09bde; /*#a5e09b78;*/
