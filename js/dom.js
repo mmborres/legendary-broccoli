@@ -140,11 +140,15 @@ const addShuffle = function() {
 	const $playAgain = $('<img>');
     $playAgain.attr('src', "img/playagain.gif");
 	$playAgain.attr('class', "imgbutton");
+	$playAgain.attr('height', "65");
+	$playAgain.attr('width', "200");
     $playAgain.on('click', playAgain );
 
 	const $resetstats = $('<img>');
-	$resetstats.attr('src', "img/resetstats.png");
+	$resetstats.attr('src', "img/resetstats.jpg");
 	$resetstats.attr('class', "imgbutton");
+	$resetstats.attr('height', "60");
+	$resetstats.attr('width', "140");
     $resetstats.on('click', resetStats );
 	
 	$('#playagain').append($playAgain);
