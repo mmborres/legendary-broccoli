@@ -132,8 +132,30 @@ const getHighestScore = function(pArray) {
   let hightotal = 0;
   let total = 0;
   let highArray = []; //initial value
-  for (let y=0; y<pArray.length; y++) {
+  
+	//randomize the order of the arrays for unpredictability
+	const r = []; //random order of pArray contents
+	const t = pArray.length;
+
+	//setup random indexes
+	if (t>1) {
+		for (let y=0; y<t; y++ ) {
+			let tempInd = 0;
+			do {
+				tempInd = Math.floor(Math.random() * t);
+			} while(r.includes(tempInd)===true);
+			r[y] = tempInd;
+		}
+	} 
+  
+  let y = 0;
+  for (let i=0; i<t; i++) {
     total = 0;
+	if (t>1) {
+		y = r[i];
+	} else {
+		y = i;
+	}
 
     //usual points
     for (let x=0; x<3; x++) { //inner is 3
