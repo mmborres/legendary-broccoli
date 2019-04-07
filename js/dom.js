@@ -489,14 +489,17 @@ const retrieveLocalStore = function() {
 };
 
 const resetStats = function() {
-   alert("This will reset scores to zero, as well as the game. Are you sure?");
-   localStorage.clear(); //start fresh
+   const ans = confirm("This will reset scores to zero, as well as the game. Are you sure?");
    
-   	$('#gameboard').html("");
-	$('#playagain').html("");
-	$('#playagain').attr('visibility', "hidden");
+   if (ans) { //if true
+	   localStorage.clear(); //start fresh
+   
+		$('#gameboard').html("");
+		$('#playagain').html("");
+		$('#playagain').attr('visibility', "hidden");
 	
-   location.reload();
+		window.location.replace('index.html');
+   }
 };
 
 const startGame = function() {
