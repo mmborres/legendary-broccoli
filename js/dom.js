@@ -505,7 +505,7 @@ const resetStats = function() {
 const startGame = function() {
 	
 	const x = window.location.href;
-	if (x.includes("index.html")) {
+	if ( x.endsWith("legendary-broccoli/") || x.includes("index.html")) {
 		
 		const retrieved = retrieveLocalStore(); //in case game is in progress
 		const customFound = getCustom(); //in case there are custom settings
