@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Cookie Monster Tic Tac Toe</title>
@@ -10,6 +11,7 @@
   <script src="js/custom.js"></script>
 
 </head>
+
 <body>
 
   <div class="container">
@@ -19,10 +21,10 @@
         <a href="instructions.html">Instructions</a>
         &nbsp;&nbsp;&nbsp;
         <a href="index.html">Game</a>
-		    &nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;
         <a href="custom.html">Custom</a>
-		&nbsp;&nbsp;&nbsp;
-		<a href="https://mmborres.github.io/contact.html">Contact</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="https://mmborres.github.io/contact.html">Contact</a>
       </nav>
     </header>
 
@@ -31,34 +33,40 @@
       <p class="pClass">
 
         <form id="formcustom" action="index.html" method="get" class="pClass">
-      Enter Player A's name: <input type="text" id"playerNameA" name="playerNameA"><br>
-      Enter Player B's name: <input type="text" id"playerNameB" name="playerNameB"><br>
-      Player A, choose first => <br>
-      <div class="divflex">
-        &nbsp;&nbsp;&nbsp;<div class="divimg"><img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerIceCream()">
-          <div class="centered" id="chooseicecream">Player A</div></div>
-			  <div class="divimg"><img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerCookie()">
-          <div class="centered" id="choosecookie">Player B</div></div>
-      </div>
-      <input type="hidden" id="player" name="player" value="icecream">
-      <input type="hidden" id="playAgainst" name="playAgainst" value="peer">
-      Play first?
-      <input type="radio" name="alert" id="playFirstA" onclick="playFirstPeerCall()" checked="checked">Player A
-      <input type="radio" name="alert" id="playFirstB" onclick="playFirstPeerCall()">Player B
-      <input type="hidden" id="playFirstPeer" name="playFirstPeer" value="playerA">
-      <br>
-      <input type="image" id="imagePlayButton" alt="Ready? Game On!" src="img/play.png">
+          Enter Player A's name: <input type="text" id"playerNameA" name="playerNameA"><br>
+          Enter Player B's name: <input type="text" id"playerNameB" name="playerNameB"><br>
+          Player A, choose first => <br>
+          <div class="divflex">
+            &nbsp;&nbsp;&nbsp;<div class="divimg"><img id="icHuman" name="icHuman" src="img/icHuman.jpg"
+                onclick="playerIceCream()">
+              <div class="centered" id="chooseicecream">Player A</div>
+            </div>
+            <div class="divimg"><img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerCookie()">
+              <div class="centered" id="choosecookie">Player B</div>
+            </div>
+          </div>
+          <input type="hidden" id="player" name="player" value="icecream">
+          <input type="hidden" id="playAgainst" name="playAgainst" value="peer">
+          Play first?
+          <input type="radio" name="alert" id="playFirstA" onclick="playFirstPeerCall()" checked="checked">Player A
+          <input type="radio" name="alert" id="playFirstB" onclick="playFirstPeerCall()">Player B
+          <input type="hidden" id="playFirstPeer" name="playFirstPeer" value="playerA">
+          <br>
+          <input type="image" id="imagePlayButton" alt="Ready? Game On!" src="img/play.png">
         </form>
 
 
       </p>
-	  <p>&nbsp;&nbsp;</p>
+      <p>&nbsp;&nbsp;</p>
     </main>
 
   </div>
   <footer class="clearfix">
-	<span class="copyright"><a href="https://mmborres.github.io/index.html" class="contactdetails">BACK TO PROJECTS</a></span>
-	<span class="message">Copyright@2019 | CONNECT: <a href="https://www.linkedin.com/in/mabethmborres/" class="contactdetails" target="_top">MABETH BORRES</a></span>
+    <span class="copyright"><a href="https://mmborres.github.io/index.html" class="contactdetails">BACK TO
+        PROJECTS</a></span>
+    <span class="message">Copyright@2019 | CONNECT: <a href="https://www.linkedin.com/in/mabethmborres/"
+        class="contactdetails" target="_top">MABETH BORRES</a></span>
   </footer>
 </body>
+
 </html>

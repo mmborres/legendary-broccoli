@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Cookie Monster Tic Tac Toe</title>
@@ -10,6 +11,7 @@
   <script src="js/custom.js"></script>
 
 </head>
+
 <body>
 
   <div class="container">
@@ -19,53 +21,58 @@
         <a href="instructions.html">Instructions</a>
         &nbsp;&nbsp;&nbsp;
         <a href="index.html">Game</a>
-		    &nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;
         <a href="custom.html">Custom</a>
-		&nbsp;&nbsp;&nbsp;
-		<a href="https://mmborres.github.io/contact.html">Contact</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="https://mmborres.github.io/contact.html">Contact</a>
       </nav>
     </header>
 
     <main>
       <h2>Cookie OR Ice Cream?</h2>
       <p class="pClass">
-      Play against the computer. <br>
+        Play against the computer. <br>
         <form id="formcustom" action="index.html" method="get" class="pClass">
-			Enter your name: <input type="text" id"playerName" name="playerName"><br>
-			Choose Player => <br>
-			<div class="divflex">
-        <div class="divimg"><img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerHuman()">
-          <div class="centered" id="chooseicecream">Human Player</div></div>
-			  <div class="divimg"><img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerAI()">
-          <div class="centered" id="choosecookie">Computer</div></div>
-      </div>
-			<input type="hidden" id="player" name="player" value="icHuman">
-      <input type="hidden" id="playAgainst" name="playAgainst" value="AI">
+          Enter your name: <input type="text" id"playerName" name="playerName"><br>
+          Choose Player => <br>
+          <div class="divflex">
+            <div class="divimg"><img id="icHuman" name="icHuman" src="img/icHuman.jpg" onclick="playerHuman()">
+              <div class="centered" id="chooseicecream">Human Player</div>
+            </div>
+            <div class="divimg"><img id="cookieAI" name="cookieAI" src="img/cookieAI.jpg" onclick="playerAI()">
+              <div class="centered" id="choosecookie">Computer</div>
+            </div>
+          </div>
+          <input type="hidden" id="player" name="player" value="icHuman">
+          <input type="hidden" id="playAgainst" name="playAgainst" value="AI">
 
-			Play first?
-			<input type="radio" name="alert" id="alertYes" onclick="playFirst()" checked="checked">Yes
-  		<input type="radio" name="alert" id="alertNo" onclick="playFirst()">No
-			<input type="hidden" id="playFirstAI" name="playFirstAI" value="false">
-			<br>
-      How do you like your opponent? <br>
-      <input type="radio" name="computer" id="computerDumb" onclick="compAI()">Semi-smart
-  		<input type="radio" name="computer" id="computerSmart" onclick="compAI()" checked="checked">Smart
-			<input type="hidden" id="computerdumb" name="computerdumb" value="false">
-			<br>
-			<input type="image" id="imagePlayButton" alt="Ready? Game On!" src="img/play.png">
+          Play first?
+          <input type="radio" name="alert" id="alertYes" onclick="playFirst()" checked="checked">Yes
+          <input type="radio" name="alert" id="alertNo" onclick="playFirst()">No
+          <input type="hidden" id="playFirstAI" name="playFirstAI" value="false">
+          <br>
+          How do you like your opponent? <br>
+          <input type="radio" name="computer" id="computerDumb" onclick="compAI()">Semi-smart
+          <input type="radio" name="computer" id="computerSmart" onclick="compAI()" checked="checked">Smart
+          <input type="hidden" id="computerdumb" name="computerdumb" value="false">
+          <br>
+          <input type="image" id="imagePlayButton" alt="Ready? Game On!" src="img/play.png">
         </form>
 
 
 
 
       </p>
-	  <p>&nbsp;&nbsp;</p>
+      <p>&nbsp;&nbsp;</p>
     </main>
 
   </div>
   <footer class="clearfix">
-	<span class="copyright"><a href="https://mmborres.github.io/index.html" class="contactdetails">BACK TO PROJECTS</a></span>
-	<span class="message">Copyright@2019 | CONNECT: <a href="https://www.linkedin.com/in/mabethmborres/" class="contactdetails" target="_top">MABETH BORRES</a></span>
+    <span class="copyright"><a href="https://mmborres.github.io/index.html" class="contactdetails">BACK TO
+        PROJECTS</a></span>
+    <span class="message">Copyright@2019 | CONNECT: <a href="https://www.linkedin.com/in/mabethmborres/"
+        class="contactdetails" target="_top">MABETH BORRES</a></span>
   </footer>
 </body>
+
 </html>
