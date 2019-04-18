@@ -124,10 +124,16 @@ footer {
 	font-family: "Droid Serif", serif;
 	font-size: 16px;
 	letter-spacing: .08em;
-	font-weight: 500;
+	font-weight: 500;	
 }
 
 /** CLASSES **/
+
+.footernotgame {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
 
 .container {
   max-width: 960px; /* common value, responsive design */
