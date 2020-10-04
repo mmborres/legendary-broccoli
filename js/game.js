@@ -124,6 +124,9 @@ const getPossiblePlacements = function (index) {
       if(index === 1 && gameArray[3] !== "" && gameArray[0] === "" && validPairs[y].includes(0) ) { 
         pArray.push(validPairs[y]); //only if available
       }
+      if(index === 1 && gameArray[5] !== "" && gameArray[2] === "" && validPairs[y].includes(2) && validPairs[y].includes(4) ) { 
+        pArray.push(validPairs[y]); //only if available
+      }
       if(index === 5 && gameArray[4] !== "" && gameArray[8] === "" && validPairs[y].includes(8) ) { 
         pArray.push(validPairs[y]); //only if available
       }
@@ -345,13 +348,21 @@ const potentialPoints = function (array, player) {
   }
   if(g[4]!=="" && total<10) {
     if ( g[6]==="" && array.includes(7) ) {
-      index = 6; 
+      if (g[1]!=="" && g[2]==="") {
+        index = 2;
+      } else {
+        index = 6; 
+      }
     }
     if ( g[0]==="" && array.includes(5) ) {
       index = 0; 
     }
     if ( g[2]==="" && array.includes(5) ) {
-      index = 2; 
+      if (g[6]!=="" || g[5]!=="") {
+        index = 2; 
+      } else {
+        index = 6; 
+      }
     }
   }
   return index;
