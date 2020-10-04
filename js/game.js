@@ -336,16 +336,22 @@ const potentialPoints = function (array, player) {
       }
     }
   }
-  // other center moves
+  // other greedy center moves
   if(array.includes(4) && g[4]==="" && g[index]==="") {
     index = 4; // choose center if index chosen is outer
   }
   if(g[4]==="" && total<10) {
     index = 4; 
   }
-  if(g[4]!=="" && array.includes(7) && total<10) {
-    if (g[6]==="" ) {
+  if(g[4]!=="" && total<10) {
+    if ( g[6]==="" && array.includes(7) ) {
       index = 6; 
+    }
+    if ( g[0]==="" && array.includes(5) ) {
+      index = 0; 
+    }
+    if ( g[2]==="" && array.includes(5) ) {
+      index = 2; 
     }
   }
   return index;
