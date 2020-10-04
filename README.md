@@ -18,9 +18,9 @@ However there are ways to customise the game via the Custom page.
 ### Player can choose: ###
 
   * to play against a peer player or computer AI
-  * to play against either of two computer AI
-    * Semi-smart AI (more chances of player winning)
-    * Smart AI (more challenging with minimal chances of winning)
+  [//]: #* to play against either of two computer AI
+  [//]: #  * Semi-smart AI (more chances of player winning)
+  [//]: #  * Smart AI (more challenging with minimal chances of winning)
   * be either an Ice Cream (default if not chosen) or Cookie avatar
   * to play first (default) or second (after peer player or computer)
   * to enter name or go by the defaults "Human", "Player A" or "Player B"

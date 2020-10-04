@@ -57,6 +57,53 @@ const getPossiblePlacements = function (index) {
             pArray.push(validPairs[y]); //only if available
           }
         }
+        // other plays
+        if(index === 2 && validPairs[y].includes(index) ) {
+          const idxs = [4, 5, 6, 8];
+          for (let i2=0; i2 < idxs.length; i2++) {
+            const icur = idxs[i2];
+            if(gameArray[icur] !== "" && validPairs[y].includes(icur)) {
+              pArray.push(validPairs[y]); //only if available
+            }
+          }
+          if(gameArray[0] === "" && validPairs[y].includes(0)) {
+            pArray.push(validPairs[y]); //only if available
+          }
+          if(gameArray[1] === "" && validPairs[y].includes(1)) {
+            pArray.push(validPairs[y]); //only if available
+          }
+        }
+
+        if(index === 6 && validPairs[y].includes(index) ) {
+          const idxs = [0, 4, 7, 8];
+          for (let i2=0; i2 < idxs.length; i2++) {
+            const icur = idxs[i2];
+            if(gameArray[icur] !== "" && validPairs[y].includes(icur)) {
+              pArray.push(validPairs[y]); //only if available
+            }
+          }
+        }
+
+        if(index === 0 && validPairs[y].includes(index) ) {
+          const idxs = [1, 2, 4, 6];
+          for (let i2=0; i2 < idxs.length; i2++) {
+            const icur = idxs[i2];
+            if(gameArray[icur] !== "" && validPairs[y].includes(icur)) {
+              pArray.push(validPairs[y]); //only if available
+            }
+          }
+        }
+
+        if(index === 8 && validPairs[y].includes(index) ) {
+          const idxs = [2, 4, 6, 7];
+          for (let i2=0; i2 < idxs.length; i2++) {
+            const icur = idxs[i2];
+            if(gameArray[icur] !== "" && validPairs[y].includes(icur)) {
+              pArray.push(validPairs[y]); //only if available
+            }
+          }
+        }
+
       }
     }
   } //smartAI
@@ -71,6 +118,9 @@ const getPossiblePlacements = function (index) {
         if (gameArray[g0] === "" || gameArray[g1] === "" || gameArray[g2] === "") {
           pArray.push(validPairs[y]); //only if available
         }
+      }
+      if(index === 1 && gameArray[3] !== "" && gameArray[0] === "" && validPairs[y].includes(0) ) { 
+        pArray.push(validPairs[y]); //only if available
       }
     }
   }
@@ -213,7 +263,7 @@ const checkWinner = function () {
         playerHumanObj.roundswon += 1;
         winnerImg = playerHumanObj.winimg;
       } else {
-        name = playerAIObj.name;
+        name = "Computer"; //playerAIObj.name;
         playerAIObj.roundswon += 1;
         winnerImg = playerAIObj.winimg;
       }
@@ -281,6 +331,18 @@ const potentialPoints = function (array, player) {
       }
     }
   }
+  // other center moves
+  if(array.includes(4) && g[4]==="" && g[index]==="") {
+    index = 4; // choose center if index chosen is outer
+  }
+  if(g[4]==="" && total<10) {
+    index = 4; 
+  }
+  if(g[4]!=="" && array.includes(7) && total<10) {
+    if (g[6]==="" ) {
+      index = 6; 
+    }
+  }
   return index;
 };
 
@@ -345,6 +407,23 @@ const playAI = function (arrayObj, index) {
         placed = occupy(array[gIdx]);
       }
 
+      // last resort
+      if (placed === false) {
+        for (let y = 0; y < validPairs.length; y++) {
+          const cur = validPairs[y];
+          if (cur[gIdx] === index) {
+            if (gameArray[gIdx+1] === "") {
+              placed = occupy(gIdx+1);
+            }
+            if (placed === false) {
+              // other plays 
+            }
+            if (placed === true) {
+              break;
+            }
+          }
+        }
+      }
     } //
 
     return placed;
@@ -381,6 +460,7 @@ const gamePlay = function (index) {
   if (playAgainst === "AI") {
     // given an index, get possible placements
     const arrPossiblePlacements = getPossiblePlacements(index);
+    //console.log("arrPossiblePlacements: " + arrPossiblePlacements);
 
     // get highest score row
     const highScoreRowObj = getHighestScore(arrPossiblePlacements);

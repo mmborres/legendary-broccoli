@@ -28,7 +28,7 @@ let playerHumanObjB = { //default values
 };
 
 let playerAIObj = { //default values
-	name: "Smart AI",
+	name: "Computer",
 	player: "O",
 	img: IMGCOOKIE,
 	winimg: WINCOOKIE,
@@ -194,7 +194,7 @@ const displayRounds = function () {
 	if (playAgainst === "AI") {
 		const winH = "win" + (playerHumanObj.roundswon === 1 ? "" : "s");
 		const winA = "win" + (playerAIObj.roundswon === 1 ? "" : "s");
-		rounds = `${playerHumanObj.name}: ${playerHumanObj.roundswon} ${winH}  |  ${playerAIObj.name}: ${playerAIObj.roundswon} ${winA}`;
+		rounds = `${playerHumanObj.name}: ${playerHumanObj.roundswon} ${winH}  |  Computer: ${playerAIObj.roundswon} ${winA}`;
 	} else {
 		const winH = "win" + (playerHumanObj.roundswon === 1 ? "" : "s");
 		const winA = "win" + (playerHumanObjB.roundswon === 1 ? "" : "s");
@@ -357,14 +357,14 @@ const getCustom = function () {
 				compdumb = customvals.split("computerdumb=")[1];
 				compdumb = compdumb.substring(0, compdumb.indexOf('&'));
 
-				if (compdumb === "false") {
+				//if (compdumb === "false") {
 					smartAI = true;
-					playerAIObj.name = "Smart AI";
+					playerAIObj.name = "Computer";
 
-				} else {
-					smartAI = false;
-					playerAIObj.name = "Semi-smart AI";
-				}
+				// } else {
+				// 	smartAI = false;
+				// 	playerAIObj.name = "Computer";
+				// }
 			}
 		}
 	}
@@ -460,7 +460,7 @@ const retrieveLocalStore = function () {
 					smartAI = true;
 				}
 				if (!temp || temp === false || temp === "false") {
-					smartAI = false;
+					smartAI = true; //always true moving forward
 				}
 			}
 
