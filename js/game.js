@@ -76,7 +76,7 @@ const getPossiblePlacements = function (index) {
         }
 
         if(index === 6 && validPairs[y].includes(index) ) {
-          const idxs = [0, 4, 7, 8];
+          const idxs = [0, 3, 4, 7, 8];
           for (let i2=0; i2 < idxs.length; i2++) {
             const icur = idxs[i2];
             if(gameArray[icur] !== "" && validPairs[y].includes(icur)) {
