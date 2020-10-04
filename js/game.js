@@ -120,7 +120,11 @@ const getPossiblePlacements = function (index) {
           pArray.push(validPairs[y]); //only if available
         }
       }
+      // greedy greedy plays
       if(index === 1 && gameArray[3] !== "" && gameArray[0] === "" && validPairs[y].includes(0) ) { 
+        pArray.push(validPairs[y]); //only if available
+      }
+      if(index === 5 && gameArray[4] !== "" && gameArray[8] === "" && validPairs[y].includes(8) ) { 
         pArray.push(validPairs[y]); //only if available
       }
     }
