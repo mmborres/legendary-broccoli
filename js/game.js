@@ -57,7 +57,8 @@ const getPossiblePlacements = function (index) {
             pArray.push(validPairs[y]); //only if available
           }
         }
-        // other plays
+        // greedy greedy plays
+        // add rows for more chances of winning
         if(index === 2 && validPairs[y].includes(index) ) {
           const idxs = [4, 5, 6, 8];
           for (let i2=0; i2 < idxs.length; i2++) {
@@ -85,7 +86,7 @@ const getPossiblePlacements = function (index) {
         }
 
         if(index === 0 && validPairs[y].includes(index) ) {
-          const idxs = [1, 2, 4, 6];
+          const idxs = [1, 2, 3, 4, 6];
           for (let i2=0; i2 < idxs.length; i2++) {
             const icur = idxs[i2];
             if(gameArray[icur] !== "" && validPairs[y].includes(icur)) {
@@ -95,7 +96,7 @@ const getPossiblePlacements = function (index) {
         }
 
         if(index === 8 && validPairs[y].includes(index) ) {
-          const idxs = [2, 4, 6, 7];
+          const idxs = [2, 4, 5, 6, 7];
           for (let i2=0; i2 < idxs.length; i2++) {
             const icur = idxs[i2];
             if(gameArray[icur] !== "" && validPairs[y].includes(icur)) {
