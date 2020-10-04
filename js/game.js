@@ -461,7 +461,7 @@ const gamePlay = function (index) {
   if (playAgainst === "AI") {
     // given an index, get possible placements
     const arrPossiblePlacements = getPossiblePlacements(index);
-    //console.log("arrPossiblePlacements: " + arrPossiblePlacements);
+    console.log("arrPossiblePlacements: " + arrPossiblePlacements);
 
     // get highest score row
     const highScoreRowObj = getHighestScore(arrPossiblePlacements);
